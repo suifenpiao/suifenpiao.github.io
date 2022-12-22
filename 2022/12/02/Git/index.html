@@ -1,0 +1,394 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>分类: 技术 | 暮色随风</title><meta name="author" content="zha0fe1"><meta name="copyright" content="zha0fe1"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="通过廖雪峰的博客与git自带的游戏学习git">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git">
+<meta property="og:url" content="https://musewithwind.gitee.io/2022/12/02/Git/index.html">
+<meta property="og:site_name" content="暮色随风">
+<meta property="og:description" content="通过廖雪峰的博客与git自带的游戏学习git">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
+<meta property="article:published_time" content="2022-12-02T09:46:00.000Z">
+<meta property="article:modified_time" content="2022-12-22T14:08:05.603Z">
+<meta property="article:author" content="zha0fe1">
+<meta property="article:tag" content="工具">
+<meta property="article:tag" content="GIT">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://musewithwind.gitee.io/2022/12/02/Git/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: zha0fe1","link":"链接: ","source":"来源: 暮色随风","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '分类: 技术',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-12-22 22:08:05'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.2"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',()=> { preloader.endLoading() })
+
+if (false) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/touxiang.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">5</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://gitee.com/musewithwind/imgstorage/raw/master/images/git.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">暮色随风</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Git</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-12-02T09:46:00.000Z" title="发表于 2022-12-02 17:46:00">2022-12-02</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-12-22T14:08:05.603Z" title="更新于 2022-12-22 22:08:05">2022-12-22</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Git"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h3 id="Git的背景"><a href="#Git的背景" class="headerlink" title="Git的背景"></a>Git的背景</h3><p>有一份你正在编辑的大型word文档，中间一段你觉得写的不好，你想删除它，越看这一段你越觉得不顺眼。但是你害怕你的甲方或者老板觉得它写得好，所以你有一个问题：留着不顺眼，删除了又怕甲方觉得好；这个时候，同事A又来找你交接工作，他要改你的大型文档，这时候你总不能闲着，你要继续编辑这份文档。等同事A工作完成你还需要合并文档，查看修改的地方并合并修改，非常麻烦。怎么办？一种方法是备份文件，备份两份，一份删了中间那一段，自己编辑起来就很爽，另一份不删，留给老板看。至于工作的交接，只好手动完成，是不是很麻烦？另一个方法就是今天要介绍的工具–分布式版本控制系统-Git</p>
+<h3 id="Git的产生"><a href="#Git的产生" class="headerlink" title="Git的产生"></a>Git的产生</h3><p>Linux在流行初期，世界各地的志愿者都为其提交代码，为了让Linux变得更好，而提交的代码合并，纯粹靠linux本人手动合并，这是因为当时市场上流行的集中式版本控制系统CVS、SVN需要联网付费且速度慢，而且不开源，所以linux选择手动合并，后来linux在社区的要求下使用了一个版本控制系统，由于纠纷，这个版本控制系统也没有用多久，Git应运而生—使用C语言开发，为分布式版本控制系统，仅用两周时间。</p>
+<h3 id="集中式与分布式的区别"><a href="#集中式与分布式的区别" class="headerlink" title="集中式与分布式的区别"></a>集中式与分布式的区别</h3><p>集中式：集中式的容易出现单点出了问题，全盘崩溃；<br>分布式：分布式不会因为某地分支出了问题就全盘崩溃</p>
+<h3 id="Git安装-Windows"><a href="#Git安装-Windows" class="headerlink" title="Git安装(Windows)"></a>Git安装(Windows)</h3><ul>
+<li><p>进入官网默认选项安装即可</p>
+</li>
+<li><p>安装完毕，进入git，设置自己的名字与邮箱：</p>
+<ul>
+<li><code>git config --global user.name &quot;xx&quot;</code></li>
+<li><code>git config --global user.email &quot;xx@xx.com&quot;</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="版本库-x2F-仓库操作"><a href="#版本库-x2F-仓库操作" class="headerlink" title="版本库&#x2F;仓库操作"></a>版本库&#x2F;仓库操作</h3><h4 id="创建仓库"><a href="#创建仓库" class="headerlink" title="创建仓库"></a>创建仓库</h4><blockquote>
+<p>可以简单理解成一个目录，这个目录里面的所有文件都可以被Git管理起来，每个文件的修改、删除，Git都能跟踪，以便任何时刻都可以追踪历史，或者在将来某个时刻可以“还原”。</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir cangkumingzi</span><br><span class="line">$ cd cangkumingzi</span><br><span class="line">$ pwd</span><br><span class="line">/盘符/仓库路径</span><br></pre></td></tr></table></figure>
+
+<h4 id="仓库初始化"><a href="#仓库初始化" class="headerlink" title="仓库初始化"></a>仓库初始化</h4><blockquote>
+<p>通过命令使这个文件夹成为git可以管理的仓库</p>
+</blockquote>
+<p><code>git init</code></p>
+<h4 id="添加文件到仓库"><a href="#添加文件到仓库" class="headerlink" title="添加文件到仓库"></a>添加文件到仓库</h4><ul>
+<li>首先新建空白文件<code>readme.txt</code>到仓库目录</li>
+<li>然后执行<code>git add readme.txt</code>(git add用于将修改行为放入待提交状态)</li>
+<li>再执行<code>git commit -m &quot;说明&quot;</code>  -m参数用于说明(git commit用于将待提交修改正式提交入仓库)</li>
+<li>执行<code>git status</code>用于检查是否有未提交的修改，是否有未放入待提交状态的修改以及，哪些文件被修改了</li>
+</ul>
+<h4 id="版本回退"><a href="#版本回退" class="headerlink" title="版本回退"></a>版本回退</h4><p>^39c194</p>
+<ul>
+<li>首先我们在<code>readme.txt</code>中随便输入几个字符，然后按上节步骤提交</li>
+<li>如上步骤我们再重复两次</li>
+<li>此时如果我们需要查看历史改动，可以输入<code>git log</code>查看历史修改详情</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">xxx@xxx MINGW64 /e/gittest (master)</span><br><span class="line">$ git log</span><br><span class="line">commit 62be9f391274fe19fe8c99bed297207e5fbeacd2 (HEAD -&gt; master)</span><br><span class="line">Author: suifenpiao &lt;1379887009@qq.com&gt;</span><br><span class="line">Date:   Fri Dec 2 21:30:32 2022 +0800</span><br><span class="line"></span><br><span class="line">    suibianxiugai3</span><br><span class="line"></span><br><span class="line">commit 8046bf030f7f32e6f68e112e55fc3d1033be2f05</span><br><span class="line">Author: suifenpiao &lt;1379887009@qq.com&gt;</span><br><span class="line">Date:   Fri Dec 2 21:30:13 2022 +0800</span><br><span class="line"></span><br><span class="line">    suibianxiugai2</span><br><span class="line"></span><br><span class="line">commit db2de623015b24e9784d9490edc159a12bba7d0d</span><br><span class="line">Author: suifenpiao &lt;1379887009@qq.com&gt;</span><br><span class="line">Date:   Fri Dec 2 21:05:40 2022 +0800</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>你不断对文件进行修改，然后不断提交修改到版本库里，每当你觉得文件修改到一定程度的时候，就可以“保存一个快照”，这个快照在Git中被称为<code>commit</code>。一旦你把文件改乱了，或者误删了文件，还可以从最近的一个<code>commit</code>恢复，然后继续工作，而不是把几个月的工作成果全部丢失。</p>
+</li>
+<li><p>以上git命令中，每一个<code>commit(快照)</code>后的字符串，是git通过<code>sha1</code>算法计算出来的<code>commit id(版本号)</code></p>
+</li>
+<li><p>现在我们准备把<code>readme.txt</code>回退到上一个版本，怎么做呢？</p>
+<ul>
+<li>首先，Git必须知道当前版本是哪个版本，在Git中，用<code>HEAD</code>表示当前版本，也就是最新的提交<code>8046bf...</code>（注意我的提交ID和你的肯定不一样），上一个版本就是<code>HEAD^</code>，上上一个版本就是<code>HEAD^^</code>，当然往上100个版本写100个<code>^</code>比较容易数不过来，所以写成<code>HEAD~100</code>。</li>
+<li>现在，我们要把当前版本的内容回退到上一个版本，就可以使用<code>git reset</code>命令：</li>
+<li>&#96;$ git reset –hard HEAD^</li>
+<li>输出：<code>HEAD is now at e475afc add distributed</code></li>
+<li><code>--hard</code>参数有啥意义？这个后面再讲，现在你先放心使用。</li>
+<li>看看<code>readme.txt</code>的内容是不是上一个版本：</li>
+<li><code>$ cat readme.txt</code></li>
+<li>可以看到内容已经被还原</li>
+<li>还可以继续回退到再上一个版本，不过且慢，让我们用<code>git log</code>再看看现在版本库的状态：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">$ git log</span><br><span class="line">commit 8046bf030f7f32e6f68e112e55fc3d1033be2f05 (HEAD -&gt; master)</span><br><span class="line">Author: suifenpiao &lt;1379887009@qq.com&gt;</span><br><span class="line">Date:   Fri Dec 2 21:30:13 2022 +0800</span><br><span class="line"></span><br><span class="line">    suibianxiugai2</span><br><span class="line"></span><br><span class="line">commit db2de623015b24e9784d9490edc159a12bba7d0d</span><br><span class="line">Author: suifenpiao &lt;1379887009@qq.com&gt;</span><br><span class="line">Date:   Fri Dec 2 21:05:40 2022 +0800</span><br><span class="line"></span><br><span class="line">    suibianxiugai</span><br><span class="line"></span><br><span class="line">commit f0ad0cc4c82ed7c6465d2d9607a3216d61c3f246</span><br><span class="line">Author: suifenpiao &lt;1379887009@qq.com&gt;</span><br><span class="line">Date:   Fri Dec 2 19:11:49 2022 +0800</span><br><span class="line"></span><br><span class="line">    1 file add to gittest</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>最新的那个版本<code>suibainxiugai3</code>已经看不到了,既然如此，那我们如果又想回到<code>suibainxiugai3</code>，怎么办？</p>
+<ul>
+<li>命令行窗口未关闭时，向上翻找找到被撤销提交的<code>commit id</code>，也就是commit后的字符串，<code>8046bf...</code>，于是可以指定回到未来的某个版本：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git reset --hard 8046bf...</span><br><span class="line">HEAD is now at 83b0afe append GPL</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>版本号没必要写全，前几位就可以了，Git会自动去找。当然也不能只写前一两位，因为Git可能会找到多个版本号，就无法确定是哪一个了</p>
+</li>
+<li><p>再次查看<code>readme.txt</code>的内容：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cat readme.txt</span><br></pre></td></tr></table></figure></li>
+<li><p>原先撤销的commit又回来了。</p>
+</li>
+<li><p>Git的版本回退速度非常快，因为Git在内部有个指向当前版本的<code>HEAD</code>指针，当你回退版本的时候，Git仅仅是把HEAD从指向<code>suibianxiugai2</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">┌────┐</span><br><span class="line">│HEAD│</span><br><span class="line">└────┘</span><br><span class="line">   │</span><br><span class="line">   └──&gt; ○ suibianxiugai3</span><br><span class="line">        │</span><br><span class="line">        ○ suibainxiugai2</span><br><span class="line">        │</span><br><span class="line">        ○ suibianxiugai</span><br></pre></td></tr></table></figure></li>
+<li><p>改为指向<code>suibianxiugai2</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">┌────┐</span><br><span class="line">│HEAD│</span><br><span class="line">└────┘</span><br><span class="line">   │</span><br><span class="line">   │    ○ suibianxiugai3</span><br><span class="line">   │    │</span><br><span class="line">   └──&gt; ○ suibainxiugai2</span><br><span class="line">        │</span><br><span class="line">        ○ suibianxiugai</span><br></pre></td></tr></table></figure></li>
+<li><p>然后顺便把工作区的文件更新了。所以你让<code>HEAD</code>指向哪个版本号，你就把当前版本定位在哪。</p>
+</li>
+<li><p>现在，你回退到了某个版本，关掉了电脑，第二天早上就后悔了，想恢复到新版本怎么办？找不到新版本的<code>commit id</code>怎么办？</p>
+</li>
+<li><p>在Git中，总是有后悔药可以吃的。当你用<code>$ git reset --hard HEAD^</code>回退到<code>suibianxiugai2</code>版本时，再想恢复到<code>suibainxiugai3</code>，就必须找到<code>suibainxiugai3</code>的commit id。Git提供了一个命令<code>git reflog</code>用来记录你的每一次命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ git reflog</span><br><span class="line">8046bf0 (HEAD -&gt; master) HEAD@&#123;0&#125;: reset: moving to HEAD^</span><br><span class="line">62be9f3 HEAD@&#123;1&#125;: reset: moving to HEAD</span><br><span class="line">62be9f3 HEAD@&#123;2&#125;: commit: suibianxiugai3</span><br><span class="line">8046bf0 (HEAD -&gt; master) HEAD@&#123;3&#125;: commit: suibianxiugai2</span><br><span class="line">db2de62 HEAD@&#123;4&#125;: commit: suibianxiugai</span><br><span class="line">f0ad0cc HEAD@&#123;5&#125;: commit (initial): 1 file add to gittest</span><br></pre></td></tr></table></figure></li>
+<li><p>从输出可知，<code>suibainxiugai3</code>的commit id是<code>8046bf...</code>，现在，你回到未来了</p>
+</li>
+</ul>
+<h4 id="工作区与暂存区"><a href="#工作区与暂存区" class="headerlink" title="工作区与暂存区"></a>工作区与暂存区</h4><h5 id="工作区"><a href="#工作区" class="headerlink" title="工作区"></a>工作区</h5><p>电脑能看到的目录，如<code>gitteset</code>就是一个工作区</p>
+<h5 id="版本库-git文件"><a href="#版本库-git文件" class="headerlink" title="版本库(.git文件)"></a>版本库(.git文件)</h5><h6 id="暂存区"><a href="#暂存区" class="headerlink" title="暂存区"></a>暂存区</h6><p><code>git add xx.xx</code>文件会先被保存到暂存区，可进行多次add命令</p>
+<h6 id="Header"><a href="#Header" class="headerlink" title="Header"></a>Header</h6><p>指向master分支的指针</p>
+<h6 id="master分支"><a href="#master分支" class="headerlink" title="master分支"></a>master分支</h6><ul>
+<li>进行<code>git commit</code>后，所有已经进行的<code>git add</code>操作都会被提交到master分支上，可以使用<code>git status</code>查看当前提交状态<ul>
+<li>当我们只进行了<code>add</code>操作，查看提交状态会有<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ git status</span><br><span class="line">On branch master</span><br><span class="line">Changes not staged for commit:</span><br><span class="line">  (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)</span><br><span class="line">  (use &quot;git restore &lt;file&gt;...&quot; to discard changes in working directory)</span><br><span class="line">        modified:   readme.txt</span><br><span class="line">Untracked files:</span><br><span class="line">  (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)</span><br><span class="line">        LICENSE.txt</span><br><span class="line">no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>当我们执行了<code>commit</code>操作后<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git status</span><br><span class="line">On branch master</span><br><span class="line">nothing to commit, working tree clean</span><br></pre></td></tr></table></figure>
+可以看到，此时工作区(work tree)干净了</li>
+</ul>
+<blockquote>
+<p>综合来看上述流程，其实就是：在工作区修改文件，修改好的文件通过add提交到暂存区，暂存区的文件再通过commit一次全部提交到master分支</p>
+</blockquote>
+<h4 id="对修改的操作"><a href="#对修改的操作" class="headerlink" title="对修改的操作"></a>对修改的操作</h4><blockquote>
+<p>为什么Git比其他版本控制系统设计得优秀，因为Git跟踪并管理的是修改，而非文件。</p>
+</blockquote>
+<blockquote>
+<p>什么是修改？<br>比如你新增了一行，这就是一个修改，删除了一行，也是一个修改，更改了某些字符，也是一个修改，删了一些又加了一些，也是一个修改，甚至创建一个新文件，也算一个修改。</p>
+</blockquote>
+<h5 id="管理修改"><a href="#管理修改" class="headerlink" title="管理修改"></a>管理修改</h5><ul>
+<li>我们对<code>readme.txt</code>添加内容123，</li>
+<li>然后<code>git add readme.txt</code></li>
+<li>再次对<code>readme.txt</code>修改，添加内容asdf</li>
+<li>此时<code>git commit</code> ，提交成功</li>
+<li>再次使用<code>git status</code>查看当前提交状态，发现当前提交到master分支的只有123这次修改，为什么？<ul>
+<li>git的commit只对存于暂存区的修改进行提交,而第二次修改并没有add，也就是并没有存储到暂存区</li>
+</ul>
+</li>
+<li>我们使用<code>git diff HEAD -- readme.txt</code>命令查看工作区和版本库里最新版本txt文件的区别，可以发现第二次修改确实没有保存进去<ul>
+<li><a target="_blank" rel="noopener" href="https://www.runoob.com/git/git-diff.html">git diff？</a></li>
+</ul>
+</li>
+<li>怎么办？<ul>
+<li>再次<code>git add readme.txt</code>,<code>git commit -m &quot;xxx&quot;</code>即可</li>
+</ul>
+</li>
+<li>输入<code>git status</code>,可以看到最后一次改动显示在了屏幕上</li>
+</ul>
+<h5 id="撤销修改"><a href="#撤销修改" class="headerlink" title="撤销修改"></a>撤销修改</h5><ul>
+<li>对于修改内容的处理，我们可以使用命令<code>git checkout --filename</code>，意为将工作区所做的修改全部撤销，这里有两种情况<ul>
+<li>情况1：文件自修改以后还没有放到暂存区，撤销修改后，工作区的文件就回到和版本库一模一样的状态</li>
+<li>情况2：文件已经添加到暂存区后，又做了修改，此时撤销修改就是回到添加到暂存区时（执行了add命令）的状态</li>
+</ul>
+</li>
+<li>对于已经添加到暂存区的修改内容，我们可以使用命令<code>git reset HEAD &lt;filename&gt;</code>来撤销此次add，重新将修改从暂存区放回工作区<ul>
+<li><code>git reset</code>命令既可以回退版本，也可以把暂存区的修改回退到工作区。当我们用<code>HEAD</code>时，表示最新的版本。</li>
+<li>放回工作区后，对工作区内容的撤销参考第一大点情况1</li>
+</ul>
+</li>
+<li>对于已经添加到暂存区且已经提交的内容，我们可以[[#^39c194|版本回退]]</li>
+<li>对于已经提交到远程仓库的内容，没法子了。</li>
+</ul>
+<p><em>以上内容基于廖雪峰2019年git文档，git对于上面的点进行了更新如下</em></p>
+<hr>
+<ul>
+<li>原来的git checkout 可以使用 git restore 代替</li>
+<li>原来的git reset HEAD 可以使用 git restore –staged 代替</li>
+<li>最新版的git提示都已经更换成了restore</li>
+<li>使用<ul>
+<li>情况1：在工作区做了修改，并未添加到暂存区，想撤销工作区的修改，用 git restore file;</li>
+<li>情况2：在工作区做了修改，并用git add 添加到了暂存区，未提交；想撤销，分两步，1.先撤销暂存区的修改，用 git restore –staged file, 2.然后参考情况1撤销工作区的修改；</li>
+<li>情况3：在工作区做了修改，且git add git commit添加并提交了内容，想撤销本次提交，直接用 git reset –hard HEAD^回退版本，即可保证工作区，暂存区，版本库都是上次的内容</li>
+</ul>
+</li>
+</ul>
+<h5 id="删除操作"><a href="#删除操作" class="headerlink" title="删除操作"></a>删除操作</h5><ul>
+<li>前提：你删除了本地仓库（工作区）中的文件</li>
+<li>现在要对版本库中的内容进行修改，对其进行修改有以下情形<ul>
+<li>情形1：你确实需要删除版本库的文件<ul>
+<li>这时你可以输入命令<code>git rm xx.txt</code></li>
+<li>然后<code>git commit</code>，进行版本库中文件的删除</li>
+</ul>
+</li>
+<li>情形2：你误删了工作区中的文件，现在想要恢复<ul>
+<li>使用命令<code>git checkout -- xx.txt </code></li>
+<li><code>git checkout</code>其实是用版本库里的版本替换工作区的版本，无论工作区是修改还是删除，都可以“一键还原”。</li>
+<li>命令<code>git rm</code>用于删除一个文件。如果一个文件已经被提交到版本库，那么你永远不用担心误删，但是要小心，你只能恢复文件到最新版本，你会丢失<strong>最近一次提交后你修改的内容</strong>。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="添加远程仓库"><a href="#添加远程仓库" class="headerlink" title="添加远程仓库"></a>添加远程仓库</h4><blockquote>
+<p>什么是远程仓库？</p>
+</blockquote>
+<p>存在一台中央服务器，里面存储了完整的仓库，每一个用户只需要登录自己的git并且下载中央服务器的仓库就可以实现对仓库的增删改查，同时也可以向中央服务器提交自己的更新并合并入中央服务器的仓库</p>
+<ul>
+<li>在进行后续的内容之前，我们需要配置<code>SSH key</code><ul>
+<li>在用户主目录下，看看有没有.ssh目录，如果有，再看看这个目录下有没有<code>id_rsa</code>和<code>id_rsa.pub</code>这两个文件，如果已经有了，可直接跳到下一步。如果没有，打开Git Bash，创建SSH Key：</li>
+<li>&#96;$ ssh-keygen -t rsa -C “<a href="mailto:&#121;&#111;&#x75;&#x72;&#101;&#x6d;&#97;&#105;&#x6c;&#x40;&#x65;&#x78;&#97;&#109;&#x70;&#x6c;&#x65;&#46;&#x63;&#111;&#109;">&#121;&#111;&#x75;&#x72;&#101;&#x6d;&#97;&#105;&#x6c;&#x40;&#x65;&#x78;&#97;&#109;&#x70;&#x6c;&#x65;&#46;&#x63;&#111;&#109;</a>“</li>
+<li>可以在gitbash返回的目录里找到<code>.ssh</code>目录，里面有<code>id_rsa</code>和<code>id_rsa.pub</code>两个文件，这两个就是SSH Key的秘钥对，<code>id_rsa</code>是私钥，不能泄露出去，<code>id_rsa.pub</code>是公钥，可以告诉任何人。</li>
+</ul>
+</li>
+<li>登陆GitHub，打开“Account settings”，“SSH Keys”页面：</li>
+<li>点“Add SSH Key”，填上任意Title，在Key文本框里粘贴<code>id_rsa.pub</code>文件的内容：</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://musewithwind.gitee.io">zha0fe1</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://musewithwind.gitee.io/2022/12/02/Git/">https://musewithwind.gitee.io/2022/12/02/Git/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://musewithwind.gitee.io" target="_blank">暮色随风</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%B7%A5%E5%85%B7/">工具</a><a class="post-meta__tags" href="/tags/GIT/">GIT</a></div><div class="post_share"><div class="social-share" data-image="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2022/11/29/CTF%E5%9C%A8%E7%BA%BF%E5%B7%A5%E5%85%B7/"><img class="next-cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">CTF在线工具</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/touxiang.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">zha0fe1</div><div class="author-info__description">江湖夜雨十年灯</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">5</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://m.weibo.cn/u/7713352758?uid=7713352758&amp;t=0&amp;luicode=10000011&amp;lfid=100103type%3D1%26q%3D%E5%AF%B9%E6%8A%97%E6%97%A0%E6%84%8F%E4%B9%89"><i class="fab fa-github"></i><span>More</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="mailto:1379887009@qq.com" target="_blank" title="Email"><i class="QQ"></i></a><a class="social-icon" href="https://github.com/suifen" target="_blank" title="Github"><i class="github"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">回首向来萧瑟处,归去,也无风雨也无晴</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Git%E7%9A%84%E8%83%8C%E6%99%AF"><span class="toc-number">1.</span> <span class="toc-text">Git的背景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Git%E7%9A%84%E4%BA%A7%E7%94%9F"><span class="toc-number">2.</span> <span class="toc-text">Git的产生</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9B%86%E4%B8%AD%E5%BC%8F%E4%B8%8E%E5%88%86%E5%B8%83%E5%BC%8F%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">3.</span> <span class="toc-text">集中式与分布式的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Git%E5%AE%89%E8%A3%85-Windows"><span class="toc-number">4.</span> <span class="toc-text">Git安装(Windows)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%88%E6%9C%AC%E5%BA%93-x2F-%E4%BB%93%E5%BA%93%E6%93%8D%E4%BD%9C"><span class="toc-number">5.</span> <span class="toc-text">版本库&#x2F;仓库操作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E4%BB%93%E5%BA%93"><span class="toc-number">5.1.</span> <span class="toc-text">创建仓库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%93%E5%BA%93%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">5.2.</span> <span class="toc-text">仓库初始化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E6%96%87%E4%BB%B6%E5%88%B0%E4%BB%93%E5%BA%93"><span class="toc-number">5.3.</span> <span class="toc-text">添加文件到仓库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%89%88%E6%9C%AC%E5%9B%9E%E9%80%80"><span class="toc-number">5.4.</span> <span class="toc-text">版本回退</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E5%8C%BA%E4%B8%8E%E6%9A%82%E5%AD%98%E5%8C%BA"><span class="toc-number">5.5.</span> <span class="toc-text">工作区与暂存区</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E5%8C%BA"><span class="toc-number">5.5.1.</span> <span class="toc-text">工作区</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%89%88%E6%9C%AC%E5%BA%93-git%E6%96%87%E4%BB%B6"><span class="toc-number">5.5.2.</span> <span class="toc-text">版本库(.git文件)</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%9A%82%E5%AD%98%E5%8C%BA"><span class="toc-number">5.5.2.1.</span> <span class="toc-text">暂存区</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#Header"><span class="toc-number">5.5.2.2.</span> <span class="toc-text">Header</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#master%E5%88%86%E6%94%AF"><span class="toc-number">5.5.2.3.</span> <span class="toc-text">master分支</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%B9%E4%BF%AE%E6%94%B9%E7%9A%84%E6%93%8D%E4%BD%9C"><span class="toc-number">5.6.</span> <span class="toc-text">对修改的操作</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AE%A1%E7%90%86%E4%BF%AE%E6%94%B9"><span class="toc-number">5.6.1.</span> <span class="toc-text">管理修改</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%92%A4%E9%94%80%E4%BF%AE%E6%94%B9"><span class="toc-number">5.6.2.</span> <span class="toc-text">撤销修改</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E6%93%8D%E4%BD%9C"><span class="toc-number">5.6.3.</span> <span class="toc-text">删除操作</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93"><span class="toc-number">5.7.</span> <span class="toc-text">添加远程仓库</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/12/02/Git/" title="Git"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Git"/></a><div class="content"><a class="title" href="/2022/12/02/Git/" title="Git">Git</a><time datetime="2022-12-02T09:46:00.000Z" title="发表于 2022-12-02 17:46:00">2022-12-02</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/11/29/CTF%E5%9C%A8%E7%BA%BF%E5%B7%A5%E5%85%B7/" title="CTF在线工具"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CTF在线工具"/></a><div class="content"><a class="title" href="/2022/11/29/CTF%E5%9C%A8%E7%BA%BF%E5%B7%A5%E5%85%B7/" title="CTF在线工具">CTF在线工具</a><time datetime="2022-11-29T11:05:48.000Z" title="发表于 2022-11-29 19:05:48">2022-11-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/11/29/CTF%E4%BC%98%E8%B4%A8%E5%8D%9A%E5%AE%A2/" title="CTF优质博客"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CTF优质博客"/></a><div class="content"><a class="title" href="/2022/11/29/CTF%E4%BC%98%E8%B4%A8%E5%8D%9A%E5%AE%A2/" title="CTF优质博客">CTF优质博客</a><time datetime="2022-11-28T16:00:00.000Z" title="发表于 2022-11-29 00:00:00">2022-11-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/11/29/Git%E6%B3%84%E9%9C%B2%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86-%E8%BD%AC%E8%BD%BD/" title="Git泄露相关知识-转载"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Git泄露相关知识-转载"/></a><div class="content"><a class="title" href="/2022/11/29/Git%E6%B3%84%E9%9C%B2%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86-%E8%BD%AC%E8%BD%BD/" title="Git泄露相关知识-转载">Git泄露相关知识-转载</a><time datetime="2022-11-28T16:00:00.000Z" title="发表于 2022-11-29 00:00:00">2022-11-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/18/%E5%8A%A8%E6%9C%BA%E6%80%A7%E6%8E%A8%E7%90%86-3/" title="动机性推理"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="动机性推理"/></a><div class="content"><a class="title" href="/2022/09/18/%E5%8A%A8%E6%9C%BA%E6%80%A7%E6%8E%A8%E7%90%86-3/" title="动机性推理">动机性推理</a><time datetime="2022-09-18T04:32:00.000Z" title="发表于 2022-09-18 12:32:00">2022-09-18</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2022 By zha0fe1</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat_btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: '',
+      appKey: '',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script type="text/javascript" src="../jsToDefendDel/live2d/L2Dwidget.min.js"></script><script type="text/javascript" src="../jsToDefendDel/live2dafter.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-show-text.min.js" data-mobile="false" data-text="野鹤,纷飞,日暮,不思归" data-fontsize="15px" data-random="false" async="async"></script><script>(function(d, w, c) {
+    w.ChatraID = 'jExJ7L7Yt65ecxvPC';
+    var s = d.createElement('script');
+    w[c] = w[c] || function() {
+        (w[c].q = w[c].q || []).push(arguments);
+    };
+    s.async = true;
+    s.src = 'https://call.chatra.io/chatra.js';
+    if (d.head) d.head.appendChild(s);
+})(document, window, 'Chatra');
+
+if (true) {
+  var chatBtnFn = () => {
+    var chatBtn = document.getElementById("chat_btn")
+    chatBtn.addEventListener("click", function(){
+      Chatra('openChat')
+    });
+  }
+  chatBtnFn()
+} else {
+  if (false) {
+    function chatBtnHide () {
+      Chatra('hide')
+    }
+    function chatBtnShow () {
+      Chatra('show')
+    }
+  }
+}</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body></html>
